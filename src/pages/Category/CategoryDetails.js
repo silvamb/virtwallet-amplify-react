@@ -83,7 +83,7 @@ const CategoryDetails = ({ category, setValue, readOnly }) => {
             <GridSelect
               size={8}
               id="budget-type"
-              value={category.budget.type}
+              value={category.budget ? category.budget.type : "MONTHLY"}
               label={intl.formatMessage({ id: "budget_type" })}
               values={budgetTypes}
               readOnly={readOnly}
@@ -93,7 +93,7 @@ const CategoryDetails = ({ category, setValue, readOnly }) => {
               size={4}
               id="budget-value"
               label={intl.formatMessage({ id: "value" })}
-              value={category.budget.value}
+              value={category.budget ? category.budget.value : 0}
               readOnly={readOnly}
               onChange={setBudgetValue}
             />
