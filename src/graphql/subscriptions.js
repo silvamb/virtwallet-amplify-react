@@ -34,8 +34,8 @@ export const onCreateAccount = /* GraphQL */ `
       }
       categories {
         items {
-          id
           accountId
+          id
           name
           description
           type
@@ -98,8 +98,8 @@ export const onUpdateAccount = /* GraphQL */ `
       }
       categories {
         items {
-          id
           accountId
+          id
           name
           description
           type
@@ -162,8 +162,8 @@ export const onDeleteAccount = /* GraphQL */ `
       }
       categories {
         items {
-          id
           accountId
+          id
           name
           description
           type
@@ -196,8 +196,8 @@ export const onDeleteAccount = /* GraphQL */ `
 export const onCreateCategory = /* GraphQL */ `
   subscription OnCreateCategory {
     onCreateCategory {
-      id
       accountId
+      id
       account {
         id
         ownerId
@@ -251,8 +251,8 @@ export const onCreateCategory = /* GraphQL */ `
 export const onUpdateCategory = /* GraphQL */ `
   subscription OnUpdateCategory {
     onUpdateCategory {
-      id
       accountId
+      id
       account {
         id
         ownerId
@@ -306,8 +306,8 @@ export const onUpdateCategory = /* GraphQL */ `
 export const onDeleteCategory = /* GraphQL */ `
   subscription OnDeleteCategory {
     onDeleteCategory {
-      id
       accountId
+      id
       account {
         id
         ownerId
@@ -498,8 +498,8 @@ export const onCreateCategoryRule = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -562,8 +562,8 @@ export const onUpdateCategoryRule = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -626,8 +626,8 @@ export const onDeleteCategoryRule = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -712,8 +712,8 @@ export const onCreateTransaction = /* GraphQL */ `
       date
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -802,8 +802,8 @@ export const onUpdateTransaction = /* GraphQL */ `
       date
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -892,8 +892,8 @@ export const onDeleteTransaction = /* GraphQL */ `
       date
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -982,8 +982,8 @@ export const onCreateMetrics = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -1065,8 +1065,8 @@ export const onUpdateMetrics = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -1148,8 +1148,8 @@ export const onDeleteMetrics = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId

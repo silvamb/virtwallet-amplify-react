@@ -6,7 +6,7 @@ type Account @model {
 	members: [String]
 	monthStartDateRule: MonthStartDateRule
 	wallets: [Wallet] @connection(keyName: "byAccountId", fields: ["id"])
-  categories: [Category] @connection(keyName: "byAccountId", fields: ["id"])
+  categories: [Category] @connection(fields: ["id"])
   categoryRules: [CategoryRule] @connection(keyName: "byAccountId", fields: ["id"])
 }
 
@@ -22,9 +22,11 @@ type CustomPeriod {
   month: String!
 }
 
-type Category @model @key(name: "byAccountId", fields: ["accountId"]) {
-  id: ID!
+type Category 
+  @model
+  @key(fields: ["accountId", "id"]) {
   accountId: ID!
+  id: ID!
   account: Account @connection(fields: ["accountId"])
   name: String!
   description: String

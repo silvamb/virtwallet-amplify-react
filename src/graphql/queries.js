@@ -34,8 +34,8 @@ export const getAccount = /* GraphQL */ `
       }
       categories {
         items {
-          id
           accountId
+          id
           name
           description
           type
@@ -99,10 +99,10 @@ export const listAccounts = /* GraphQL */ `
   }
 `;
 export const getCategory = /* GraphQL */ `
-  query GetCategory($id: ID!) {
-    getCategory(id: $id) {
-      id
+  query GetCategory($accountId: ID!, $id: ID!) {
+    getCategory(accountId: $accountId, id: $id) {
       accountId
+      id
       account {
         id
         ownerId
@@ -155,14 +155,24 @@ export const getCategory = /* GraphQL */ `
 `;
 export const listCategorys = /* GraphQL */ `
   query ListCategorys(
+    $accountId: ID
+    $id: ModelIDKeyConditionInput
     $filter: ModelCategoryFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listCategorys(
+      accountId: $accountId
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -286,8 +296,8 @@ export const getCategoryRule = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -342,8 +352,8 @@ export const listCategoryRules = /* GraphQL */ `
         }
         categoryId
         category {
-          id
           accountId
+          id
           name
           description
           type
@@ -424,8 +434,8 @@ export const getTransaction = /* GraphQL */ `
       date
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -507,8 +517,8 @@ export const listTransactions = /* GraphQL */ `
         date
         categoryId
         category {
-          id
           accountId
+          id
           name
           description
           type
@@ -593,8 +603,8 @@ export const getMetrics = /* GraphQL */ `
       }
       categoryId
       category {
-        id
         accountId
+        id
         account {
           id
           ownerId
@@ -669,8 +679,8 @@ export const listMetricss = /* GraphQL */ `
         }
         categoryId
         category {
-          id
           accountId
+          id
           name
           description
           type

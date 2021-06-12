@@ -7,7 +7,7 @@ import { list as listCategories } from "../../model/Category";
 import { showError } from "../../util/utils";
 
 function CategoryListItem(category) {
-  const to = `/category/${category.id}`;
+  const to = `/account/${category.accountId}/category/${category.id}`;
 
   return (
     <SimpleListItem

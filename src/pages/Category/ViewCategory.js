@@ -28,8 +28,10 @@ const EditComponent = ({ item, open, onSave, onCancel }) => {
 };
 
 const ViewCategory = ({ history, match }) => {
+  const accountId = match.params.accountId;
   const categoryId = match.params.categoryId;
   const dummyCategory = {
+    accountId,
     categoryId,
     name: "",
     description: "",
@@ -41,15 +43,15 @@ const ViewCategory = ({ history, match }) => {
   };
 
   function getCategory() {
-    return retrieve(categoryId);
+    return retrieve(accountId, categoryId);
   }
 
   function deleteCategory() {
-    return remove(categoryId);
+    return remove(accountId, categoryId);
   }
 
-  function updateCategory(item, details) {
-    return update(item.id, details);
+  function updateCategory(category, details) {
+    return update(category.accountId, category.id, details);
   }
 
   return (

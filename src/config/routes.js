@@ -59,7 +59,7 @@ const routes = [
   <AuthorizedRoute path="/account/:accountId/wallet/:walletId/dashboard" exact component={WalletDashboard}/>,
   <AuthorizedRoute path="/account/:accountId/categories" exact component={ListCategories} />,
   <AuthorizedRoute path="/account/:accountId/category/create" exact component={NewCategory} />,
-  <AuthorizedRoute path="/category/:categoryId" exact component={ViewCategory} />,
+  <AuthorizedRoute path="/account/:accountId/category/:categoryId" exact component={ViewCategory} />,
   <AuthorizedRoute path="/account/:accountId/keywordrules" exact component={ListKeywordRules} />,
   <AuthorizedRoute path="/account/:accountId/keywordrule/create" exact component={NewKeywordRule} />,
   <AuthorizedRoute path="/keywordrule/:keywordRuleId" exact component={ViewKeywordRule} />,

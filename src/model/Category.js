@@ -27,8 +27,8 @@ export const listCategoriesbyAccount = /* GraphQL */ `
 `;
 
 export const getCategoryDetails = /* GraphQL */ `
-  query GetCategoryDetails($id: ID!) {
-    getCategory(id: $id) {
+  query GetCategoryDetails($accountId: ID!, $id: ID!) {
+    getCategory(accountId: $accountId, id: $id) {
       accountId
       id
       name
@@ -62,13 +62,13 @@ export const list = async (accountId) => {
   }
 };
 
-export const retrieve = async (categoryId) => {
-  console.log("Retrieving category details", categoryId);
+export const retrieve = async (accountId, categoryId) => {
+  console.log("Retrieving category details for category", accountId, categoryId);
 
   try {
     const { data } = await API.graphql({
       query: getCategoryDetails,
-      variables: { id: categoryId },
+      variables: { accountId, id: categoryId },
     });
     console.log("Category Data", data);
     return data.getCategory;
@@ -78,10 +78,10 @@ export const retrieve = async (categoryId) => {
   }
 };
 
-export const update = async (categoryId, details) => {
-  console.log("Updating category", categoryId, "details", details);
+export const update = async (accountId, categoryId, details) => {
+  console.log("Updating category", accountId, categoryId, "details", details);
 
-  const categoryDetails = { id: categoryId, ...details };
+  const categoryDetails = { accountId, id: categoryId, ...details };
 
   try {
     const { data } = await API.graphql({
@@ -96,10 +96,10 @@ export const update = async (categoryId, details) => {
   }
 };
 
-export const remove = async (categoryId) => {
-  console.log("Deleting category", categoryId);
+export const remove = async (accountId, categoryId) => {
+  console.log("Deleting category", accountId, categoryId);
 
-  const deleteCategoryInput = { id: categoryId };
+  const deleteCategoryInput = { accountId, id: categoryId };
 
   try {
     const { data } = await API.graphql({
