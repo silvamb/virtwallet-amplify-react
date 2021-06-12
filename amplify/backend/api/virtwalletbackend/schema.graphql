@@ -1,0 +1,150 @@
+type Account @model {
+	id: ID!
+	ownerId: String!
+	name: String!
+	description: String
+	members: [String]
+	monthStartDateRule: MonthStartDateRule
+	wallets: [Wallet] @connection(keyName: "byAccountId", fields: ["id"])
+  categories: [Category] @connection(keyName: "byAccountId", fields: ["id"])
+  categoryRules: [CategoryRule] @connection(keyName: "byAccountId", fields: ["id"])
+}
+
+type MonthStartDateRule {
+	dayOfMonth: Int!
+	currentMonth: Boolean!
+	manuallySetPeriods: [CustomPeriod]
+}
+
+type CustomPeriod {
+	startDate: AWSDate!
+	endDate: AWSDate!
+  month: String!
+}
+
+type Category @model @key(name: "byAccountId", fields: ["accountId"]) {
+  id: ID!
+  accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  name: String!
+  description: String
+  budget: Budget
+  type: CategoryType
+  categoryRules: [CategoryRule] @connection(keyName: "byCategoryId", fields: ["id"])
+}
+
+type Budget {
+	type: BudgetType!
+	value: Float!
+}
+
+enum BudgetType {
+  MONTHLY,
+  BIMONTHLY,
+  YEARLY
+}
+
+enum CategoryType {
+  INCOME,
+  EXPENDITURE
+}
+
+type Wallet @model @key(name: "byAccountId", fields: ["accountId"]) {
+  id: ID!
+	accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  ownerId: String!
+	name: String!
+	description: String
+	balance: Float
+  type: WalletType
+}
+
+enum WalletType {
+  CHECKING_ACCOUNT,
+  CREDIT_CARD,
+  CASH,
+  SAVINGS_ACCOUNT
+}
+
+type CategoryRule
+  @model
+  @key(name: "byAccountId", fields: ["accountId"])
+  @key(name: "byCategoryId", fields: ["categoryId"]) {
+  id: ID!
+  accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  categoryId: ID!
+  category: Category  @connection(fields: ["categoryId"])
+  ruleType: CategoryRuleType!
+  priority: Int
+  keyword: String
+  name: String
+  type: ExpressionRuleType
+  parameter: String
+}
+
+enum CategoryRuleType {
+  KEYWORD,
+  EXPRESSION
+}
+
+enum ExpressionRuleType {
+  CONTAINS,
+  STARTSWITH,
+  REGEX
+}
+
+type Transaction 
+  @model
+  @key(fields: ["accountId", "date", "walletId", "id"]) {
+  id: ID!
+  accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  walletId: ID!
+  wallet: Wallet @connection(fields: ["walletId"])
+  date: AWSDate!
+  categoryId: ID!
+  category: Category @connection(fields: ["categoryId"])
+  dt: AWSDateTime
+  referenceMonth: String!
+  value: Float!
+  description: String!
+  keyword: String!
+  type: String
+  balance: Float
+  balanceType: BalanceType
+  source: String
+  sourceType: SourceType
+}
+
+enum BalanceType {
+  CREDIT,
+  DEBIT
+}
+
+enum SourceType {
+  AUTOMATIC,
+  MANUAL
+}
+
+type Metrics
+  @model
+  @key(fields: ["accountId", "date", "walletId", "categoryId"]) {
+  id: ID!
+  accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  date: String!
+  walletId: ID!
+  wallet: Wallet @connection(fields: ["walletId"])
+  categoryId: ID!
+  category: Category @connection(fields: ["categoryId"])
+  granularity: Granularity
+  sum: Float
+  count: Int
+}
+
+enum Granularity {
+  MONTHLY,
+  YEARLY
+}
