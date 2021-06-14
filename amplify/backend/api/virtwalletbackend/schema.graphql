@@ -140,7 +140,7 @@ type Metrics
   walletId: ID!
   wallet: Wallet @connection(fields: ["walletId"])
   categoryId: ID!
-  category: Category @connection(fields: ["categoryId"])
+  category: Category @connection(fields: ["accountId", "categoryId"])
   granularity: Granularity
   sum: Float
   count: Int
