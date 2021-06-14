@@ -1,6 +1,7 @@
 import { defineMessages } from 'react-intl'
 
 const accountMessages = {
+  account_dashboard: 'Account Dashboard',
   accounts: 'Accounts',
   list_accounts: 'List Accounts',
   view_account: 'View Account',
@@ -13,7 +14,10 @@ const accountMessages = {
   manually_set_periods: 'Manually Set Periods',
   members: 'Members',
   wallets: 'Wallets',
-  category_rules: 'Category Rules'
+  category_rules: 'Category Rules',
+  earned: 'Earned',
+  spent: 'Spent',
+  budgeted: 'Budgeted',
 };
 
 const walletMessages = {
@@ -150,7 +154,10 @@ const commonMessages = {
   to: 'To',
   from: 'From',
   search: 'Search',
-  date: 'Date'
+  date: 'Date',
+  dashboard: 'Dashboard',
+  summary: 'Summary',
+  total: 'Total',
 };
 
 const messages = defineMessages({

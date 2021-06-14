@@ -43,6 +43,10 @@ const ViewAccountComponent = ({ item: account }) => {
       <Divider />
       <List component="nav" aria-label="secondary account details">
         <ListItemLink
+          to={`/account/${account.id}/dashboard`}
+          primary={intl.formatMessage({ id: "dashboard" })}
+        />
+        <ListItemLink
           to={`/account/${account.id}/members`}
           primary={intl.formatMessage({ id: "members" })}
         />

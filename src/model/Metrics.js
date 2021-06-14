@@ -1,25 +1,6 @@
 import { API } from "aws-amplify";
 
-const listMetricsByDateAndCategoryQuery = /* GraphQL */ `
-  query MetricsByDateAndCategory(
-    $accountId: ID
-    $sortKey: ModelMetricsPrimaryCompositeKeyConditionInput
-  ) {
-    listMetricss(dateWalletIdCategoryId: $sortKey, accountId: $accountId) {
-      items {
-        date
-        count
-        sum
-        category {
-          name
-          type
-        }
-      }
-    }
-  }
-`;
-
-export const listMetricsByDateAndCategory = async ({ accountId, walletId, from, to }) => {
+async function listMetrics(query, { accountId, walletId, from, to }) {
   console.log(
     "Retrieving metrics for [ account:",
     accountId,
@@ -44,7 +25,7 @@ export const listMetricsByDateAndCategory = async ({ accountId, walletId, from, 
 
   try {
     const { data } = await API.graphql({
-      query: listMetricsByDateAndCategoryQuery,
+      query,
       variables: { accountId, sortKey },
     });
 
@@ -57,4 +38,47 @@ export const listMetricsByDateAndCategory = async ({ accountId, walletId, from, 
     console.log("Error retrieving metrics", err);
     throw new Error("Error retrieving metrics");
   }
+}
+
+const listMetricsByDateAndCategoryQuery = /* GraphQL */ `
+  query MetricsByDateAndCategory(
+    $accountId: ID
+    $sortKey: ModelMetricsPrimaryCompositeKeyConditionInput
+  ) {
+    listMetricss(dateWalletIdCategoryId: $sortKey, accountId: $accountId) {
+      items {
+        date
+        count
+        sum
+        category {
+          name
+          type
+        }
+      }
+    }
+  }
+`;
+
+export const listMetricsByDateAndCategory = async ({ accountId, walletId, from, to }) => {
+  return listMetrics(listMetricsByDateAndCategoryQuery, { accountId, walletId, from, to });
+};
+
+const listMetricsByDateQuery = /* GraphQL */ `
+  query MetricsByDate(
+    $accountId: ID
+    $sortKey: ModelMetricsPrimaryCompositeKeyConditionInput
+  ) {
+    listMetricss(dateWalletIdCategoryId: $sortKey, accountId: $accountId) {
+      items {
+        date
+        categoryId
+        count
+        sum
+      }
+    }
+  }
+`;
+
+export const listMetricsByDate = async ({ accountId, walletId, from, to }) => {
+  return listMetrics(listMetricsByDateQuery, { accountId, walletId, from, to });
 };

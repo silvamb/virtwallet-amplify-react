@@ -15,6 +15,7 @@ const ErrorPage = lazy(() => import('../components/pages/ErrorPage'))
 const ListAccount = lazy(() => import('../pages/Account/ListAccounts'))
 const ViewAccount = lazy(() => import('../pages/Account/ViewAccount'))
 const NewAccount = lazy(() => import('../pages/Account/NewAccount'))
+const AccountDashboard = lazy(() => import('../pages/Account/AccountDashboard'))
 
 const ListWallets = lazy(() => import('../pages/Wallet/ListWallets'))
 const ViewWallet = lazy(() => import('../pages/Wallet/ViewWallet'))
@@ -60,6 +61,7 @@ const routes = [
   <AuthorizedRoute path="/account/:accountId/categories" exact component={ListCategories} />,
   <AuthorizedRoute path="/account/:accountId/category/create" exact component={NewCategory} />,
   <AuthorizedRoute path="/account/:accountId/category/:categoryId" exact component={ViewCategory} />,
+  <AuthorizedRoute path="/account/:accountId/dashboard" exact component={AccountDashboard} />,
   <AuthorizedRoute path="/account/:accountId/keywordrules" exact component={ListKeywordRules} />,
   <AuthorizedRoute path="/account/:accountId/keywordrule/create" exact component={NewKeywordRule} />,
   <AuthorizedRoute path="/keywordrule/:keywordRuleId" exact component={ViewKeywordRule} />,
