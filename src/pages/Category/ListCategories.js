@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import NestedList from "../../components/list/NestedList";
 import SimpleListItem from "../../components/list/SimpleListItem";
 import ListPage from "../../components/pages/ListPage";
-import { list as listCategories } from "../../model/Category";
+import { listCategoriesAndAccount } from "../../model/Category";
 import { showError } from "../../util/utils";
 
 function CategoryListItem(category) {
@@ -22,7 +22,7 @@ function CategoryListItem(category) {
 async function loadCategories(accountId, setCategories, enqueueSnackbar) {
   try {
     console.log("Loading Categories");
-    const categories = await listCategories(accountId);
+    const categories = await listCategoriesAndAccount(accountId);
     setCategories(categories);
   } catch (err) {
     showError(enqueueSnackbar, err.message);

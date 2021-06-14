@@ -6,9 +6,26 @@ import {
   updateCategory,
 } from "../graphql/mutations";
 
-export const listCategoriesbyAccount = /* GraphQL */ `
-  query ListCategoriesFromAccount($filter: ModelCategoryFilterInput) {
-    listCategorys(filter: $filter) {
+const listCategoriesQuery = /* GraphQL */ `
+  query ListCategories($accountId: ID!) {
+    listCategorys(accountId: $accountId) {
+      items {
+        id
+        name
+        description
+        type
+        budget {
+          type
+          value
+        }
+      }
+    }
+  }
+`;
+
+export const listCategoriesAndAccountQuery = /* GraphQL */ `
+  query ListCategoriesFromAccount($accountId: ID!) {
+    listCategorys(accountId: $accountId) {
       items {
         accountId
         id
@@ -45,12 +62,28 @@ export const getCategoryDetails = /* GraphQL */ `
 export const list = async (accountId) => {
   console.log("Retrieving categories for account", accountId);
 
-  const filter = accountId ? { accountId: { eq: accountId } } : undefined;
+  try {
+    const { data } = await API.graphql({
+      query: listCategoriesQuery,
+      variables: { accountId },
+    });
+
+    const categories = data.listCategorys.items;
+    console.log("Category Data", categories);
+    return categories;
+  } catch (err) {
+    console.log("Error retrieving categories", err);
+    throw new Error("Error retrieving Categories");
+  }
+};
+
+export const listCategoriesAndAccount = async (accountId) => {
+  console.log("Retrieving categories for account", accountId);
 
   try {
     const { data } = await API.graphql({
-      query: listCategoriesbyAccount,
-      variables: { filter },
+      query: listCategoriesAndAccountQuery,
+      variables: { accountId },
     });
 
     const categories = data.listCategorys.items;
