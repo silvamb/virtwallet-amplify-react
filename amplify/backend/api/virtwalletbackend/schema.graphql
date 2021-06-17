@@ -150,3 +150,14 @@ enum Granularity {
   MONTHLY,
   YEARLY
 }
+
+input RequestFileUploadInput {
+  accountId: ID!
+  walletId: ID!
+  parserId: String!
+  fileName: String!
+}
+
+type Mutation {
+  requestFileUpload(input: RequestFileUploadInput): String @function(name: "virtwallet-request-file-upload-${env}")
+}

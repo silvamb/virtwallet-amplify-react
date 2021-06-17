@@ -1,6 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const requestFileUpload = /* GraphQL */ `
+  mutation RequestFileUpload($input: RequestFileUploadInput) {
+    requestFileUpload(input: $input)
+  }
+`;
 export const createAccount = /* GraphQL */ `
   mutation CreateAccount(
     $input: CreateAccountInput!
