@@ -64,5 +64,5 @@ test('Error generating S3 URL', () => {
 
   const s3Url = handler(event);
 
-  expect(s3Url).rejects.toBe(new Error("Error"))
+  expect(s3Url).rejects.toEqual(new Error("Error"))
 });

@@ -1,0 +1,760 @@
+/* tslint:disable */
+/* eslint-disable */
+// this is an auto generated file. This will be overwritten
+
+export const getAccount = /* GraphQL */ `
+  query GetAccount($id: ID!) {
+    getAccount(id: $id) {
+      id
+      ownerId
+      name
+      description
+      members
+      monthStartDateRule {
+        dayOfMonth
+        currentMonth
+        manuallySetPeriods {
+          startDate
+          endDate
+          month
+        }
+      }
+      wallets {
+        items {
+          id
+          accountId
+          ownerId
+          name
+          description
+          balance
+          type
+          statementParserId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      categories {
+        items {
+          accountId
+          id
+          name
+          description
+          type
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      categoryRules {
+        items {
+          id
+          accountId
+          categoryId
+          ruleType
+          priority
+          keyword
+          name
+          type
+          parameter
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listAccounts = /* GraphQL */ `
+  query ListAccounts(
+    $filter: ModelAccountFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAccounts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCategory = /* GraphQL */ `
+  query GetCategory($accountId: ID!, $id: ID!) {
+    getCategory(accountId: $accountId, id: $id) {
+      accountId
+      id
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      name
+      description
+      budget {
+        type
+        value
+      }
+      type
+      categoryRules {
+        items {
+          id
+          accountId
+          categoryId
+          ruleType
+          priority
+          keyword
+          name
+          type
+          parameter
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCategorys = /* GraphQL */ `
+  query ListCategorys(
+    $accountId: ID
+    $id: ModelIDKeyConditionInput
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCategorys(
+      accountId: $accountId
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        accountId
+        id
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        budget {
+          type
+          value
+        }
+        type
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getWallet = /* GraphQL */ `
+  query GetWallet($id: ID!) {
+    getWallet(id: $id) {
+      id
+      accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      ownerId
+      name
+      description
+      balance
+      type
+      statementParserId
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listWallets = /* GraphQL */ `
+  query ListWallets(
+    $filter: ModelWalletFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWallets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCategoryRule = /* GraphQL */ `
+  query GetCategoryRule($id: ID!) {
+    getCategoryRule(id: $id) {
+      id
+      accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      categoryId
+      category {
+        accountId
+        id
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        budget {
+          type
+          value
+        }
+        type
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      ruleType
+      priority
+      keyword
+      name
+      type
+      parameter
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCategoryRules = /* GraphQL */ `
+  query ListCategoryRules(
+    $filter: ModelCategoryRuleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCategoryRules(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        categoryId
+        category {
+          accountId
+          id
+          name
+          description
+          type
+          createdAt
+          updatedAt
+        }
+        ruleType
+        priority
+        keyword
+        name
+        type
+        parameter
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getTransaction = /* GraphQL */ `
+  query GetTransaction(
+    $accountId: ID!
+    $date: AWSDate!
+    $walletId: ID!
+    $id: ID!
+  ) {
+    getTransaction(
+      accountId: $accountId
+      date: $date
+      walletId: $walletId
+      id: $id
+    ) {
+      id
+      accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
+      date
+      categoryId
+      category {
+        accountId
+        id
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        budget {
+          type
+          value
+        }
+        type
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      dt
+      referenceMonth
+      value
+      description
+      keyword
+      type
+      balance
+      balanceType
+      source
+      sourceType
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTransactions = /* GraphQL */ `
+  query ListTransactions(
+    $accountId: ID
+    $dateWalletIdId: ModelTransactionPrimaryCompositeKeyConditionInput
+    $filter: ModelTransactionFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listTransactions(
+      accountId: $accountId
+      dateWalletIdId: $dateWalletIdId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        walletId
+        wallet {
+          id
+          accountId
+          ownerId
+          name
+          description
+          balance
+          type
+          statementParserId
+          createdAt
+          updatedAt
+        }
+        date
+        categoryId
+        category {
+          accountId
+          id
+          name
+          description
+          type
+          createdAt
+          updatedAt
+        }
+        dt
+        referenceMonth
+        value
+        description
+        keyword
+        type
+        balance
+        balanceType
+        source
+        sourceType
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMetrics = /* GraphQL */ `
+  query GetMetrics(
+    $accountId: ID!
+    $date: String!
+    $walletId: ID!
+    $categoryId: ID!
+  ) {
+    getMetrics(
+      accountId: $accountId
+      date: $date
+      walletId: $walletId
+      categoryId: $categoryId
+    ) {
+      id
+      accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      date
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
+      categoryId
+      category {
+        accountId
+        id
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        budget {
+          type
+          value
+        }
+        type
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      granularity
+      sum
+      count
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMetricss = /* GraphQL */ `
+  query ListMetricss(
+    $accountId: ID
+    $dateWalletIdCategoryId: ModelMetricsPrimaryCompositeKeyConditionInput
+    $filter: ModelMetricsFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listMetricss(
+      accountId: $accountId
+      dateWalletIdCategoryId: $dateWalletIdCategoryId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        date
+        walletId
+        wallet {
+          id
+          accountId
+          ownerId
+          name
+          description
+          balance
+          type
+          statementParserId
+          createdAt
+          updatedAt
+        }
+        categoryId
+        category {
+          accountId
+          id
+          name
+          description
+          type
+          createdAt
+          updatedAt
+        }
+        granularity
+        sum
+        count
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getStatementFileProcess = /* GraphQL */ `
+  query GetStatementFileProcess($accountId: ID!, $id: ID!) {
+    getStatementFileProcess(accountId: $accountId, id: $id) {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listStatementFileProcesss = /* GraphQL */ `
+  query ListStatementFileProcesss(
+    $accountId: ID
+    $id: ModelIDKeyConditionInput
+    $filter: ModelStatementFileProcessFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listStatementFileProcesss(
+      accountId: $accountId
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        accountId
+        id
+        fileName
+        currentStatus
+        history {
+          status
+          statusDate
+          success
+          statusMessage
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
