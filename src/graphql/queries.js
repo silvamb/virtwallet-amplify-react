@@ -27,6 +27,7 @@ export const getAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -231,6 +232,7 @@ export const getWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -260,6 +262,7 @@ export const listWallets = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -428,6 +431,7 @@ export const getTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -511,6 +515,7 @@ export const listTransactions = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -598,6 +603,7 @@ export const getMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -674,6 +680,7 @@ export const listMetricss = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -690,6 +697,59 @@ export const listMetricss = /* GraphQL */ `
         granularity
         sum
         count
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getStatementFileProcess = /* GraphQL */ `
+  query GetStatementFileProcess($accountId: ID!, $id: ID!) {
+    getStatementFileProcess(accountId: $accountId, id: $id) {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listStatementFileProcesss = /* GraphQL */ `
+  query ListStatementFileProcesss(
+    $accountId: ID
+    $id: ModelIDKeyConditionInput
+    $filter: ModelStatementFileProcessFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listStatementFileProcesss(
+      accountId: $accountId
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        accountId
+        id
+        fileName
+        currentStatus
+        history {
+          status
+          statusDate
+          success
+          statusMessage
+        }
         createdAt
         updatedAt
       }

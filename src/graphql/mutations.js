@@ -3,7 +3,10 @@
 
 export const requestFileUpload = /* GraphQL */ `
   mutation RequestFileUpload($input: RequestFileUploadInput) {
-    requestFileUpload(input: $input)
+    requestFileUpload(input: $input) {
+      s3Url
+      statementFileProcessId
+    }
   }
 `;
 export const createAccount = /* GraphQL */ `
@@ -35,6 +38,7 @@ export const createAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -102,6 +106,7 @@ export const updateAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -169,6 +174,7 @@ export const deleteAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -416,6 +422,7 @@ export const createWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -456,6 +463,7 @@ export const updateWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -496,6 +504,7 @@ export const deleteWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -750,6 +759,7 @@ export const createTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -843,6 +853,7 @@ export const updateTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -936,6 +947,7 @@ export const deleteTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1030,6 +1042,7 @@ export const createMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1116,6 +1129,7 @@ export const updateMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1202,6 +1216,7 @@ export const deleteMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1234,6 +1249,69 @@ export const deleteMetrics = /* GraphQL */ `
       granularity
       sum
       count
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createStatementFileProcess = /* GraphQL */ `
+  mutation CreateStatementFileProcess(
+    $input: CreateStatementFileProcessInput!
+    $condition: ModelStatementFileProcessConditionInput
+  ) {
+    createStatementFileProcess(input: $input, condition: $condition) {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateStatementFileProcess = /* GraphQL */ `
+  mutation UpdateStatementFileProcess(
+    $input: UpdateStatementFileProcessInput!
+    $condition: ModelStatementFileProcessConditionInput
+  ) {
+    updateStatementFileProcess(input: $input, condition: $condition) {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteStatementFileProcess = /* GraphQL */ `
+  mutation DeleteStatementFileProcess(
+    $input: DeleteStatementFileProcessInput!
+    $condition: ModelStatementFileProcessConditionInput
+  ) {
+    deleteStatementFileProcess(input: $input, condition: $condition) {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
       createdAt
       updatedAt
     }

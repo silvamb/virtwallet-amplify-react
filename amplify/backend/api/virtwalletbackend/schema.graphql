@@ -60,6 +60,7 @@ type Wallet @model @key(name: "byAccountId", fields: ["accountId"]) {
 	description: String
 	balance: Float
   type: WalletType
+  statementParserId: String
 }
 
 enum WalletType {
@@ -151,6 +152,33 @@ enum Granularity {
   YEARLY
 }
 
+type StatementFileProcess
+  @model
+  @key(fields: ["accountId", "id"]) {
+  accountId: ID!
+  id: ID!
+  fileName: String!
+  currentStatus: FileStatus!
+  history: [StatementFileProcessHistory]
+}
+
+type StatementFileProcessHistory {
+  status: FileStatus!
+  statusDate: AWSDateTime!
+  success: Boolean!
+  statusMessage: String
+}
+
+enum FileStatus {
+  NEW,
+  PROVISIONED,
+  UPLOADED,
+  PARSING,
+  PARSED,
+  CLASSIFIED,
+  FAILED
+}
+
 input RequestFileUploadInput {
   accountId: ID!
   walletId: ID!
@@ -158,6 +186,11 @@ input RequestFileUploadInput {
   fileName: String!
 }
 
+type RequestFileUploadResponse {
+  s3Url: String!
+  statementFileProcessId: ID!
+}
+
 type Mutation {
-  requestFileUpload(input: RequestFileUploadInput): String @function(name: "virtwallet-request-file-upload-${env}")
+  requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "virtwallet-request-file-upload-${env}")
 }

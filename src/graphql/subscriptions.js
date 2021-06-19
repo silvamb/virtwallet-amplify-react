@@ -27,6 +27,7 @@ export const onCreateAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -91,6 +92,7 @@ export const onUpdateAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -155,6 +157,7 @@ export const onDeleteAccount = /* GraphQL */ `
           description
           balance
           type
+          statementParserId
           createdAt
           updatedAt
         }
@@ -390,6 +393,7 @@ export const onCreateWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -427,6 +431,7 @@ export const onUpdateWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -464,6 +469,7 @@ export const onDeleteWallet = /* GraphQL */ `
       description
       balance
       type
+      statementParserId
       createdAt
       updatedAt
     }
@@ -706,6 +712,7 @@ export const onCreateTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -796,6 +803,7 @@ export const onUpdateTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -886,6 +894,7 @@ export const onDeleteTransaction = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -977,6 +986,7 @@ export const onCreateMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1060,6 +1070,7 @@ export const onUpdateMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1143,6 +1154,7 @@ export const onDeleteMetrics = /* GraphQL */ `
         description
         balance
         type
+        statementParserId
         createdAt
         updatedAt
       }
@@ -1175,6 +1187,60 @@ export const onDeleteMetrics = /* GraphQL */ `
       granularity
       sum
       count
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateStatementFileProcess = /* GraphQL */ `
+  subscription OnCreateStatementFileProcess {
+    onCreateStatementFileProcess {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateStatementFileProcess = /* GraphQL */ `
+  subscription OnUpdateStatementFileProcess {
+    onUpdateStatementFileProcess {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteStatementFileProcess = /* GraphQL */ `
+  subscription OnDeleteStatementFileProcess {
+    onDeleteStatementFileProcess {
+      accountId
+      id
+      fileName
+      currentStatus
+      history {
+        status
+        statusDate
+        success
+        statusMessage
+      }
       createdAt
       updatedAt
     }
