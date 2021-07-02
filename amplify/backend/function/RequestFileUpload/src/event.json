@@ -1,0 +1,13 @@
+{
+  "typeName": "Mutation",
+  "fieldName": "requestFileUpload",
+  "arguments": {
+    "input": {
+      "accountId": "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+      "walletId": "5694a155-960a-4553-8e92-c16dfaec0509",
+      "parserId": "ulster-csv",
+      "fileName": "mystatement.csv",
+      "contentType": "text/csv"
+    }
+  }
+}

@@ -184,6 +184,7 @@ input RequestFileUploadInput {
   walletId: ID!
   parserId: String!
   fileName: String!
+  contentType: String!
 }
 
 type RequestFileUploadResponse {
@@ -192,5 +193,5 @@ type RequestFileUploadResponse {
 }
 
 type Mutation {
-  requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "virtwallet-request-file-upload-${env}")
+  requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "RequestFileUpload-${env}")
 }
