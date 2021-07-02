@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "private": true,
+  "description": "Virtwallet GraphQL Lambda Layer",
+  "main": "index.js",
+  "dependencies": {
+    "virtwallet-graphql": "file:../../../../../../src/graphql",
+    "virtwallet-graphql-client": "file:../../src/"
+  },
+  "bundledDependencies": [
+    "virtwallet-graphql"
+  ]
+}
