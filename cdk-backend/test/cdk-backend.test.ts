@@ -11,16 +11,3 @@ test('S3 Bucket Created', () => {
 
     expectCDK(stack).to(haveResource("AWS::S3::Bucket"));
 });
-
-test('Request File Upload Function Created', () => {
-  const app = new cdk.App();
-
-  const stack = new CdkBackend.CdkBackendStack(app, 'MyTestStack', {
-    env: "test"
-  });
-
-  expectCDK(stack).to(haveResource("AWS::Lambda::Function", {
-    FunctionName: "virtwallet-request-file-upload-test",
-    Handler: "index.handler",
-  }));
-});
