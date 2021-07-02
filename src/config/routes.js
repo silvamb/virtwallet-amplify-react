@@ -21,6 +21,7 @@ const ListWallets = lazy(() => import('../pages/Wallet/ListWallets'))
 const ViewWallet = lazy(() => import('../pages/Wallet/ViewWallet'))
 const NewWallet = lazy(() => import('../pages/Wallet/NewWallet'))
 const WalletDashboard = lazy(() => import('../pages/Wallet/WalletDashboard'))
+const UploadStatementFile = lazy(() => import('../pages/UploadStatementFile/UploadStatementFile'))
 
 const ListCategories = lazy(() => import('../pages/Category/ListCategories'))
 const NewCategory = lazy(() => import('../pages/Category/NewCategory'))
@@ -58,6 +59,7 @@ const routes = [
   <AuthorizedRoute path="/account/:accountId/wallet/create" exact component={NewWallet} />,
   <AuthorizedRoute path="/wallet/:walletId" exact component={ViewWallet} />,
   <AuthorizedRoute path="/account/:accountId/wallet/:walletId/dashboard" exact component={WalletDashboard}/>,
+  <AuthorizedRoute path="/account/:accountId/wallet/:walletId/upload-statement" exact component={UploadStatementFile}/>,
   <AuthorizedRoute path="/account/:accountId/categories" exact component={ListCategories} />,
   <AuthorizedRoute path="/account/:accountId/category/create" exact component={NewCategory} />,
   <AuthorizedRoute path="/account/:accountId/category/:categoryId" exact component={ViewCategory} />,

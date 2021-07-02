@@ -10,7 +10,8 @@ export function GridTextField({
   value = "",
   readOnly,
   disabled,
-  onChange
+  onChange,
+  helperText
 }) {
   return (
     <Grid item xs={size}>
@@ -24,6 +25,7 @@ export function GridTextField({
         onChange={onChange}
         fullWidth
         disabled={disabled}
+        helperText={helperText}
       />
     </Grid>
   );

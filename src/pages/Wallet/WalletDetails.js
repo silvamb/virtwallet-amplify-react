@@ -29,12 +29,23 @@ const WALLET_TYPES = [
   "SAVINGS_ACCOUNT",
 ];
 
+const PARSER_TYPES = [
+  "ulster_csv",
+];
+
 const WalletDetails = ({ wallet, setValue, readOnly, creating = false }) => {
   const intl = useIntl();
   const theme = useTheme();
   const classes = useStyles(theme);
 
   const walletTypes = WALLET_TYPES.map((type) => {
+    return {
+      id: type,
+      text: intl.formatMessage({ id: type }),
+    };
+  });
+
+  const parserTypes = PARSER_TYPES.map((type) => {
     return {
       id: type,
       text: intl.formatMessage({ id: type }),
@@ -89,6 +100,16 @@ const WalletDetails = ({ wallet, setValue, readOnly, creating = false }) => {
               readOnly={readOnly}
               onChange={setNumberValue("balance")}
             />
+            {wallet.type === "CHECKING_ACCOUNT" && <GridSelect
+              size={12}
+              id="wallet-parser-type"
+              value={wallet.statementParserId || PARSER_TYPES[0]}
+              label={intl.formatMessage({ id: "parser_type" })}
+              values={parserTypes}
+              readOnly={readOnly}
+              disabled={!readOnly && !creating}
+              onChange={setAttribute("statementParserId")}
+            />}
           </Grid>
         </div>
       </div>

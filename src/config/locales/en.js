@@ -34,7 +34,18 @@ const walletMessages = {
   CASH: 'Cash',
   upload_statement: "Upload Statement",
   reclassify: "Reclassify",
+  parser_type: 'Parser Type',
 };
+
+const requestFileUpload = {
+  filename: 'File name',
+  pick_file: 'Pick a file',
+  requesting_file_upload: 'Requesting file upload',
+  ulster_csv: 'Ulster Bank CSV File',
+  upload_statement: 'Upload Statement',
+  uploading_file: 'Uploading file',
+  file_uploaded: 'File Uploaded',
+}
 
 const categoryMessages = {
   BIMONTHLY: 'Bimonthly',
@@ -167,7 +178,8 @@ const messages = defineMessages({
   ...categoryMessages,
   ...keywordRulesMessages,
   ...expressionRulesMessages,
-  ...transactionsMessages
+  ...transactionsMessages,
+  ...requestFileUpload,
 })
 
 export default messages

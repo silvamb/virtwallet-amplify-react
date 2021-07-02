@@ -28,6 +28,7 @@ query GetWalletDetails($id: ID!) {
     ownerId
     balance
     type
+    statementParserId
   }
 }
 `;
