@@ -154,8 +154,11 @@ enum Granularity {
 
 type StatementFileProcess
   @model
-  @key(fields: ["accountId", "id"]) {
+  @key(fields: ["accountId", "walletId", "id"]) {
   accountId: ID!
+  account: Account @connection(fields: ["accountId"])
+  walletId: ID!
+  wallet: Wallet @connection(fields: ["walletId"])
   id: ID!
   fileName: String!
   currentStatus: FileStatus!
@@ -170,12 +173,10 @@ type StatementFileProcessHistory {
 }
 
 enum FileStatus {
-  NEW,
   PROVISIONED,
-  UPLOADED,
   PARSING,
-  PARSED,
-  CLASSIFIED,
+  CLASSIFYING,
+  DONE,
   FAILED
 }
 

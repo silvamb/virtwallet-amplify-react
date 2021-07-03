@@ -1261,6 +1261,50 @@ export const createStatementFileProcess = /* GraphQL */ `
   ) {
     createStatementFileProcess(input: $input, condition: $condition) {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus
@@ -1282,6 +1326,50 @@ export const updateStatementFileProcess = /* GraphQL */ `
   ) {
     updateStatementFileProcess(input: $input, condition: $condition) {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus
@@ -1303,6 +1391,50 @@ export const deleteStatementFileProcess = /* GraphQL */ `
   ) {
     deleteStatementFileProcess(input: $input, condition: $condition) {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus

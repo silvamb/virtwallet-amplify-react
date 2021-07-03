@@ -1196,6 +1196,50 @@ export const onCreateStatementFileProcess = /* GraphQL */ `
   subscription OnCreateStatementFileProcess {
     onCreateStatementFileProcess {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus
@@ -1214,6 +1258,50 @@ export const onUpdateStatementFileProcess = /* GraphQL */ `
   subscription OnUpdateStatementFileProcess {
     onUpdateStatementFileProcess {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus
@@ -1232,6 +1320,50 @@ export const onDeleteStatementFileProcess = /* GraphQL */ `
   subscription OnDeleteStatementFileProcess {
     onDeleteStatementFileProcess {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus

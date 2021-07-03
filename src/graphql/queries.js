@@ -705,9 +705,57 @@ export const listMetricss = /* GraphQL */ `
   }
 `;
 export const getStatementFileProcess = /* GraphQL */ `
-  query GetStatementFileProcess($accountId: ID!, $id: ID!) {
-    getStatementFileProcess(accountId: $accountId, id: $id) {
+  query GetStatementFileProcess($accountId: ID!, $walletId: ID!, $id: ID!) {
+    getStatementFileProcess(
+      accountId: $accountId
+      walletId: $walletId
+      id: $id
+    ) {
       accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
       id
       fileName
       currentStatus
@@ -725,7 +773,7 @@ export const getStatementFileProcess = /* GraphQL */ `
 export const listStatementFileProcesss = /* GraphQL */ `
   query ListStatementFileProcesss(
     $accountId: ID
-    $id: ModelIDKeyConditionInput
+    $walletIdId: ModelStatementFileProcessPrimaryCompositeKeyConditionInput
     $filter: ModelStatementFileProcessFilterInput
     $limit: Int
     $nextToken: String
@@ -733,7 +781,7 @@ export const listStatementFileProcesss = /* GraphQL */ `
   ) {
     listStatementFileProcesss(
       accountId: $accountId
-      id: $id
+      walletIdId: $walletIdId
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -741,6 +789,28 @@ export const listStatementFileProcesss = /* GraphQL */ `
     ) {
       items {
         accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        walletId
+        wallet {
+          id
+          accountId
+          ownerId
+          name
+          description
+          balance
+          type
+          statementParserId
+          createdAt
+          updatedAt
+        }
         id
         fileName
         currentStatus

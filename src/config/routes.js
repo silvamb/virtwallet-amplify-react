@@ -38,6 +38,9 @@ const ViewExpressionRule = lazy(() => import('../pages/ExpressionRule/ViewExpres
 const ListTransactions = lazy(() => import('../pages/Transaction/ListTransactions'))
 const ViewTransaction = lazy(() => import('../pages/Transaction/ViewTransaction'))
 
+const ViewStatementFileProcess = lazy(() => import('../pages/UploadStatementFile/ViewFileProcess'))
+const ListProcessedStatementFiles = lazy(() => import('../pages/UploadStatementFile/ListFileProcess'))
+
 const routes = [
   <UnauthorizedRoute path="/signin" redirectTo="/" exact component={SignIn} />,
   <UnauthorizedRoute path="/signup" redirectTo="/" exact component={SignUp} />,
@@ -72,6 +75,8 @@ const routes = [
   <AuthorizedRoute path="/expressionrule/:expressionRuleId" exact component={ViewExpressionRule} />,
   <AuthorizedRoute path="/account/:accountId/wallet/:walletId/transactions" exact component={ListTransactions} />,
   <AuthorizedRoute path="/account/:accountId/wallet/:walletId/transaction/:date/:transactionId" exact component={ViewTransaction} />,
+  <AuthorizedRoute path="/account/:accountId/wallet/:walletId/statement-files-process/:statementFileProcessId" exact component={ViewStatementFileProcess} />,
+  <AuthorizedRoute path="/account/:accountId/wallet/:walletId/statement-files-process" exact component={ListProcessedStatementFiles} />,
 ]
 
 export default routes

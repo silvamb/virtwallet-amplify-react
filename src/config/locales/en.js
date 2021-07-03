@@ -38,13 +38,21 @@ const walletMessages = {
 };
 
 const requestFileUpload = {
+  classifying_file: 'Classifying File',
+  current_status: 'Current Status',
   filename: 'File name',
+  file_details: 'File Details',
+  file_uploaded: 'File Uploaded',
+  list_processed_statement_files: 'List Processed Files',
+  parsing_file: 'Parsing File',
   pick_file: 'Pick a file',
   requesting_file_upload: 'Requesting file upload',
   ulster_csv: 'Ulster Bank CSV File',
   upload_statement: 'Upload Statement',
   uploading_file: 'Uploading file',
-  file_uploaded: 'File Uploaded',
+  process: 'Process',
+  processed_statement_files: 'Processed Statement Files',
+  view_statement_file_process: 'File Process Status',
 }
 
 const categoryMessages = {
@@ -169,6 +177,7 @@ const commonMessages = {
   dashboard: 'Dashboard',
   summary: 'Summary',
   total: 'Total',
+  done: 'Done',
 };
 
 const messages = defineMessages({

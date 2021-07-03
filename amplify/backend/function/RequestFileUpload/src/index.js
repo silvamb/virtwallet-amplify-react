@@ -45,7 +45,7 @@ exports.handler = async (event) => {
     const s3Url = s3.getSignedUrl('putObject', s3Params);
     console.log('URL generated ', s3Url);
 
-    const statementFileProcessId = await createStatementRecord(input.accountId, input.fileName);
+    const statementFileProcessId = await createStatementRecord(input.accountId, input.walletId, input.fileName);
 
     return {
         s3Url,
@@ -53,15 +53,17 @@ exports.handler = async (event) => {
     };
 };
 
-async function createStatementRecord(accountId, fileName) {
+async function createStatementRecord(accountId, walletId, fileName) {
     const input = {
         accountId,
+        walletId,
         fileName,
         currentStatus: "PROVISIONED",
         history: {
             status: "PROVISIONED",
             statusDate: new Date(),
-            success: true
+            success: true,
+            statusMessage: "file_upload_requested_with_success"
         }
     };
 
