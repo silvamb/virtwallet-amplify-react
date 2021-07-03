@@ -81,7 +81,7 @@ const UploadStatementFilePage = ({ history, match }) => {
 
   const walletName = wallet ? wallet.name : "";
   const parserType = wallet
-    ? intl.formatMessage({ id: wallet.statementParserId })
+    ? intl.formatMessage({ id: wallet.statementParserId || "ulster_csv"})
     : "";
   const fileName = file ? file.name : "";
 
@@ -116,22 +116,28 @@ const UploadStatementFilePage = ({ history, match }) => {
   }
 
   async function processFile(file) {
-    const { s3Url, statementFileProcessId } = await create({
-      accountId,
-      walletId,
-      parserId: wallet.statementParserId,
-      file,
-    });
-    console.log(
-      "S3 signed URL:",
-      s3Url,
-      "Statement File Process ID",
-      statementFileProcessId
-    );
+    try {
+      const { s3Url, statementFileProcessId } = await create({
+        accountId,
+        walletId,
+        parserId: wallet.statementParserId,
+        file,
+      });
+      console.log(
+        "S3 signed URL:",
+        s3Url,
+        "Statement File Process ID",
+        statementFileProcessId
+      );
 
-    setFileStatus(intl.formatMessage({ id: "uploading_file" }));
+      setFileStatus(intl.formatMessage({ id: "uploading_file" }));
 
-    uploadFile({ s3Url, file, statementFileProcessId });
+      uploadFile({ s3Url, file, statementFileProcessId });
+    } catch(error) {
+      setLoading(false);
+      showError(enqueueSnackbar, "Error Requesting File Upload");
+      setFileStatus(intl.formatMessage({ id: "pick_file" }));
+    }
   }
 
   async function uploadFile({ s3Url, file, statementFileProcessId }) {

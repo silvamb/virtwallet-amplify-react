@@ -35,6 +35,10 @@ const ViewWalletComponent = ({ item: wallet }) => {
           primary={intl.formatMessage({ id: "upload_statement" })}
         />
         <ListItemLink
+          to={`/account/${wallet.accountId}/wallet/${wallet.id}/statement-files-process`}
+          primary={intl.formatMessage({ id: "processed_statement_files" })}
+        />
+        <ListItemLink
           to={`/account/${wallet.accountId}/wallet/${wallet.id}/reclassify`}
           primary={intl.formatMessage({ id: "reclassify" })}
         />
