@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "api": {
+      "virtwalletbackend": [
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "virtwalletbackendVirtwalletGraphQL",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "accountFilesBucket",
+      "environmentVariableName": "ACCOUNT_FILES_BUCKET"
+    }
+  ]
+}

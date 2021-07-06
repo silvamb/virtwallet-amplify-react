@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "eu-west-1",
+      "eventTime": "2021-07-04T18:48:49.264Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity":{  
+        "principalId":"Amazon-customer-ID-of-the-user-who-caused-the-event"
+      },
+      "requestParameters":{  
+        "sourceIPAddress":"127.0.0.1"
+      },
+      "responseElements":{  
+        "x-amz-request-id":"Amazon S3 generated request ID",
+        "x-amz-id-2":"Amazon S3 host that processed the request"
+      },
+      "s3": {
+        "s3SchemaVersion":"1.0",
+        "configurationId":"UlsterCsvStatementRule",
+        "bucket":{  
+           "name":"virtwallet-account-files-bucket",
+           "ownerIdentity":{
+              "principalId":"0123456789"
+           },
+           "arn":"arn:aws:s3:::virtwallet-account-files-bucket"
+        },
+        "object":{
+           "key":"statement-files/ulster_csv/4306bec7-c283-42a8-b67d-04ec3f4dccf6/5694a155-960a-4553-8e92-c16dfaec0509/myfile.csv",
+           "size":"1324",
+           "eTag":"d98a1574-dcfc-11eb-ba80-0242ac130004",
+           "versionId": null
+        }
+      }
+    }
+  ]
+}
