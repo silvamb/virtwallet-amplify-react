@@ -144,7 +144,7 @@ const UploadStatementFilePage = ({ history, match }) => {
     try {
       await doUploadFile({ s3Url, file });
       setFileStatus(intl.formatMessage({ id: "file_uploaded" }));
-      history.push(`/account/${accountId}/wallet/${walletId}/fileprocess/${statementFileProcessId}`)
+      history.push(`/account/${accountId}/wallet/${walletId}/statement-files-process/${statementFileProcessId}`)
     } catch (err) {
       console.log("Error uploading file", err);
       setLoading(false);

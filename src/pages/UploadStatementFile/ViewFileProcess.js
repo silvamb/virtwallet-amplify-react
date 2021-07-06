@@ -10,6 +10,8 @@ import ViewPage from "../../components/pages/ViewPage";
 import SectionTitle from "../../components/typography/SectionTitle";
 import { retrieve } from "../../model/StatementFileProcess";
 
+const status = ["PROVISIONED", "PARSING", "CLASSIFYING", "DONE"];
+
 const useStyles = makeStyles((theme) => ({
   fileInfo: {
     marginTop: theme.spacing(1),
@@ -46,7 +48,7 @@ const ViewStatementFileProcessComponent = ({ item: statementFileProcess }) => {
       <div className={classes.section}>
         <SectionTitle titleKey="process" />
         <div className={classes.sectionBody}>
-          <Stepper activeStep={0} orientation="vertical">
+          <Stepper activeStep={status.indexOf(statementFileProcess.currentStatus)} orientation="vertical">
             <Step key="provisioned">
               <StepLabel>
                 {intl.formatMessage({ id: "file_uploaded" })}
