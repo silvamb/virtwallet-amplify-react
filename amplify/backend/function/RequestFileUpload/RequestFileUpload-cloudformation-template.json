@@ -236,6 +236,7 @@
               "Effect": "Allow",
               "Action": [
                 "appsync:Create*",
+                "appsync:Update*",
                 "appsync:StartSchemaCreation",
                 "appsync:GraphQL"
               ],

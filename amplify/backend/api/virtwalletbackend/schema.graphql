@@ -173,6 +173,7 @@ type StatementFileProcessHistory {
 }
 
 enum FileStatus {
+  NEW,
   PROVISIONED,
   PARSING,
   CLASSIFYING,

@@ -19,15 +19,36 @@ const { handler } = require("./index");
 test("S3 URL generated", async () => {
   mockS3.getSignedUrl.mockReturnValue("S3URL");
 
-  const expectedResponse = {
+  const createRecordReponse = {
     data: {
       createStatementFileProcess: {
+        accountId: "account1",
+        walletId: "wallet1",
         id: "23d0c554-b4c4-4e12-934c-a64832b8500a",
+        history: [
+          {
+            status: "NEW",
+            statusDate: "2021-07-05T21:21:14.223Z",
+            statusMessage: "statement_file_process_created",
+            success: true,
+          },
+        ],
+        currentStatus: "NEW",
+        fileName: "file.csv",
       },
     },
   };
 
-  mockGraphqlOperation.mockReturnValue(expectedResponse);
+  const updateRecordReponse = {
+    data: {
+      updateStatementFileProcess: {
+        id: "23d0c554-b4c4-4e12-934c-a64832b8500a",
+        Status: "PROVISIONED",
+      },
+    },
+  };
+
+  mockGraphqlOperation.mockReturnValueOnce(createRecordReponse).mockReturnValueOnce(updateRecordReponse);
 
   const event = {
     typeName: "type",
@@ -51,12 +72,13 @@ test("S3 URL generated", async () => {
 
   const expectedParams = {
     Bucket: "s3Bucket",
-    Key: "statement-files/account1/wallet1/parsers/parser/file.csv",
+    Key: "statement-files/parser/account1/wallet1/file.csv",
     ContentType: "text/csv",
     StorageClass: "ONEZONE_IA",
     Metadata: {
-      clientId: "anonymous",
+      processId: "23d0c554-b4c4-4e12-934c-a64832b8500a",
     },
   };
   expect(mockS3.getSignedUrl).toHaveBeenCalledWith("putObject", expectedParams);
+  expect(mockGraphqlOperation.mock.calls.length).toEqual(2);
 });
