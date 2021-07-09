@@ -3,6 +3,7 @@
 	API_VIRTWALLETBACKEND_GRAPHQLAPIIDOUTPUT
 	API_VIRTWALLETBACKEND_GRAPHQLAPIKEYOUTPUT
 	ENV
+	FUNCTION_VIRTWALLETTRANSACTIONCLASSIFIER_NAME
 	REGION
 Amplify Params - DO NOT EDIT */
 const { S3 } = require("aws-sdk");
@@ -55,15 +56,17 @@ exports.handler = async (event) => {
   const results = await Promise.allSettled(promises);
 
   results.forEach((result, index) => {
-    const rejected = result.status === "rejected";
-    if (rejected) {
+    if (result.status === "rejected") {
       log.error(`Error processing record ${index}: ${result.reason}`);
+    } else {
+      log.info(`Record ${index} processed with success`);
     }
-    log.info(`Record ${index} processed with success`);
   });
 
   log.info("Finished parsing Ulster Statement CSV files from S3");
-  return results;
+  return results
+    .filter((result) => result.status === "fulfilled")
+    .map((result) => result.value);
 };
 
 async function processRecord(record) {
@@ -85,10 +88,23 @@ async function processRecord(record) {
   log.debug(`Retrieved process ID from Metadata: [${processId}]`);
 
   const { accountId, walletId, fileName } = getInfoFromObjKey(s3Key);
-  await updateRecord({ accountId, walletId, processId });
+  const fileRecord = await updateRecord({ accountId, walletId, processId });
 
-  log.info(`Parsing transactions from file ${fileName}`);
-  return await parseCsvFile(s3Stream);
+  try {
+    log.info(`Parsing transactions from file ${fileName}`);
+    const transactions = await parseCsvFile(s3Stream);
+
+    return {
+      accountId,
+      walletId,
+      processId,
+      fileName,
+      transactions,
+    };
+  } catch (error) {
+    log.error(`Error processing file ${fileName}`, error);
+    await updateRecordOnError(fileRecord);
+  }
 }
 
 function getInfoFromObjKey(s3Key) {
@@ -117,7 +133,12 @@ function getProcessId(request) {
 }
 
 async function updateRecord({ accountId, walletId, processId }) {
-  log.debug("Retrieving statement file process", accountId, walletId, processId);
+  log.debug(
+    "Retrieving statement file process",
+    accountId,
+    walletId,
+    processId
+  );
   const { data, errors: createErrors } = await graphqlOperation({
     query: getStatementFileProcess,
     variables: { accountId, walletId, id: processId },
@@ -141,6 +162,39 @@ async function updateRecord({ accountId, walletId, processId }) {
         statusDate: new Date(),
         success: true,
         statusMessage: "parsing_statement_file",
+      },
+    ]),
+  };
+
+  const input = { ...currentRecord, ...updated };
+
+  log.info("Updating statement record to", input);
+  const { errors: updateErrors } = await graphqlOperation({
+    query: updateStatementFileProcess,
+    variables: { input },
+  });
+
+  if (updateErrors) {
+    log.error(
+      "Error updating the statement file process in GraphQL API",
+      updateErrors
+    );
+
+    return currentRecord;
+  }
+
+  return input;
+}
+
+async function updateRecordOnError(currentRecord) {
+  const updated = {
+    currentStatus: "FAILED",
+    history: currentRecord.history.concat([
+      {
+        status: "FAILED",
+        statusDate: new Date(),
+        success: true,
+        statusMessage: "failed_parsing",
       },
     ]),
   };

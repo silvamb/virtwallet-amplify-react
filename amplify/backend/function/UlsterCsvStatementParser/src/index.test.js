@@ -85,10 +85,18 @@ test("Test processing single record", async () => {
     .mockReturnValueOnce(getRecordReponse)
     .mockReturnValueOnce(updateRecordReponse);
 
+  mockParseCsvFile.mockReturnValueOnce([]);
+
   const results = await handler(event);
 
   expect(results.length).toEqual(1);
-  expect(results[0].status).toEqual("fulfilled");
+  expect(results).toEqual([{
+    accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+    walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
+    processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
+    fileName: "myfile.csv",
+    transactions: [],
+  }]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(2);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
     query: getStatementFileProcessQuery,
@@ -100,7 +108,7 @@ test("Test processing single record", async () => {
   });
 });
 
-test("Should fail on updating record", async () => {
+test("Should fail on retrieving file process record", async () => {
   const event = {
     Records: [
       {
@@ -128,12 +136,7 @@ test("Should fail on updating record", async () => {
   mockGraphqlOperation.mockReturnValueOnce(getRecordReponse);
 
   const results = await handler(event);
-
-  expect(results.length).toEqual(1);
-  expect(results[0].status).toEqual("rejected");
-  expect(results[0].reason).toEqual(
-    new Error("Error retrieving the statement file process")
-  );
+  expect(results).toEqual([]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(1);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
     query: getStatementFileProcessQuery,
@@ -145,7 +148,7 @@ test("Should fail on updating record", async () => {
   });
 });
 
-test("Should fail on retrieving record", async () => {
+test("Should fail on updating file process record", async () => {
   const event = {
     Records: [
       {
@@ -197,11 +200,16 @@ test("Should fail on retrieving record", async () => {
   };
 
   mockGraphqlOperation.mockReturnValueOnce(getRecordReponse).mockReturnValueOnce(updateRecordReponse);
-
+  mockParseCsvFile.mockReturnValueOnce([]);
   const results = await handler(event);
 
-  expect(results.length).toEqual(1);
-  expect(results[0].status).toEqual("fulfilled");
+  expect(results).toEqual([{
+    accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+    walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
+    processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
+    fileName: "myfile.csv",
+    transactions: [],
+  }]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(2);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
     query: getStatementFileProcessQuery,

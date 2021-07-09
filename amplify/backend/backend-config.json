@@ -62,6 +62,13 @@
         },
         {
           "category": "function",
+          "resourceName": "VirtwalletTransactionClassifier",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
           "resourceName": "virtwalletbackendVirtwalletGraphQL",
           "attributes": [
             "Arn"
@@ -73,6 +80,36 @@
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer",
       "build": true
+    },
+    "VirtwalletTransactionClassifier": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "virtwalletbackend",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletbackendVirtwalletGraphQL",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletbackendVirtwalletLibLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
     }
   }
 }

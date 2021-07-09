@@ -34,6 +34,10 @@
     "functionvirtwalletbackendVirtwalletGraphQLArn": {
       "Type": "String",
       "Default": "functionvirtwalletbackendVirtwalletGraphQLArn"
+    },
+    "functionVirtwalletTransactionClassifierName": {
+      "Type": "String",
+      "Default": "functionVirtwalletTransactionClassifierName"
     }
   },
   "Conditions": {
@@ -97,6 +101,9 @@
             },
             "API_VIRTWALLETBACKEND_GRAPHQLAPIKEYOUTPUT": {
               "Ref": "apivirtwalletbackendGraphQLAPIKeyOutput"
+            },
+            "FUNCTION_VIRTWALLETTRANSACTIONCLASSIFIER_NAME": {
+              "Ref": "functionVirtwalletTransactionClassifierName"
             },
             "ACCOUNT_FILES_BUCKET": {
               "Ref": "accountFilesBucket"
@@ -257,9 +264,72 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "lambda:Get*",
+                "lambda:List*",
+                "lambda:Invoke*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:lambda:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":function:",
+                      {
+                        "Ref": "functionVirtwalletTransactionClassifierName"
+                      }
+                    ]
+                  ]
+                }
+              ]
             }
           ]
         }
+      }
+    },
+    "TransactionsParserToClassifierDestination": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "DestinationConfig": {
+          "OnSuccess": {
+            "Destination": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:lambda:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":function:",
+                  {
+                    "Ref": "functionVirtwalletTransactionClassifierName"
+                  }
+                ]
+              ]
+            }
+          }
+        },
+        "FunctionName": {
+          "Ref": "LambdaFunction"
+        },
+        "MaximumEventAgeInSeconds": 300,
+        "MaximumRetryAttempts": 0,
+        "Qualifier": "$LATEST"
       }
     }
   },

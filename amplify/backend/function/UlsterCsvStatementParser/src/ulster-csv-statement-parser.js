@@ -48,7 +48,6 @@ function parseLine(fields, dayCounter) {
     description: removeTrailingQuote(fields[2]),
     type: fields[1],
     balance: fields[4],
-    category: "NO_CATEGORY",
   };
   setValue(transaction, fields[3]);
 
