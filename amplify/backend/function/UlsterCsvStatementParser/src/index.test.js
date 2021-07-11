@@ -5,7 +5,7 @@ const mockS3 = {
         callback(_, {
           "x-amz-meta-processid": "d4f34699-7076-4254-9eca-e7daad371a1f",
         }),
-      createReadStream: jest.fn()
+      createReadStream: jest.fn(),
     };
   }),
 };
@@ -28,7 +28,7 @@ jest.mock("./ulster-csv-statement-parser", () => {
 
 process.env.ACCOUNT_FILES_BUCKET = "s3Bucket";
 
-const { handler, getStatementFileProcessQuery } = require("./index");
+const { handler, getDataQuery } = require("./index");
 
 test("Test processing single record", async () => {
   const event = {
@@ -46,7 +46,7 @@ test("Test processing single record", async () => {
     ],
   };
 
-  const getRecordReponse = {
+  const getDataResponse = {
     data: {
       getStatementFileProcess: {
         accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
@@ -69,6 +69,13 @@ test("Test processing single record", async () => {
           },
         ],
       },
+      getAccount: {
+        monthStartDateRule: {
+          currentMonth: false,
+          dayOfMonth: 25,
+          manuallySetPeriods: null,
+        },
+      },
     },
   };
 
@@ -82,7 +89,7 @@ test("Test processing single record", async () => {
   };
 
   mockGraphqlOperation
-    .mockReturnValueOnce(getRecordReponse)
+    .mockReturnValueOnce(getDataResponse)
     .mockReturnValueOnce(updateRecordReponse);
 
   mockParseCsvFile.mockReturnValueOnce([]);
@@ -90,16 +97,18 @@ test("Test processing single record", async () => {
   const results = await handler(event);
 
   expect(results.length).toEqual(1);
-  expect(results).toEqual([{
-    accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
-    walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
-    processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
-    fileName: "myfile.csv",
-    transactions: [],
-  }]);
+  expect(results).toEqual([
+    {
+      accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+      walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
+      processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
+      fileName: "myfile.csv",
+      transactions: [],
+    },
+  ]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(2);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
-    query: getStatementFileProcessQuery,
+    query: getDataQuery,
     variables: {
       accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
       walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
@@ -139,7 +148,7 @@ test("Should fail on retrieving file process record", async () => {
   expect(results).toEqual([]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(1);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
-    query: getStatementFileProcessQuery,
+    query: getDataQuery,
     variables: {
       accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
       walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
@@ -164,7 +173,7 @@ test("Should fail on updating file process record", async () => {
     ],
   };
 
-  const getRecordReponse = {
+  const getDataReponse = {
     data: {
       getStatementFileProcess: {
         accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
@@ -187,6 +196,13 @@ test("Should fail on updating file process record", async () => {
           },
         ],
       },
+      getAccount: {
+        monthStartDateRule: {
+          currentMonth: false,
+          dayOfMonth: 25,
+          manuallySetPeriods: null,
+        },
+      },
     },
   };
 
@@ -199,20 +215,24 @@ test("Should fail on updating file process record", async () => {
     ],
   };
 
-  mockGraphqlOperation.mockReturnValueOnce(getRecordReponse).mockReturnValueOnce(updateRecordReponse);
+  mockGraphqlOperation
+    .mockReturnValueOnce(getDataReponse)
+    .mockReturnValueOnce(updateRecordReponse);
   mockParseCsvFile.mockReturnValueOnce([]);
   const results = await handler(event);
 
-  expect(results).toEqual([{
-    accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
-    walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
-    processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
-    fileName: "myfile.csv",
-    transactions: [],
-  }]);
+  expect(results).toEqual([
+    {
+      accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+      walletId: "5694a155-960a-4553-8e92-c16dfaec0509",
+      processId: "d4f34699-7076-4254-9eca-e7daad371a1f",
+      fileName: "myfile.csv",
+      transactions: [],
+    },
+  ]);
   expect(mockGraphqlOperation).toHaveBeenCalledTimes(2);
   expect(mockGraphqlOperation).toHaveBeenCalledWith({
-    query: getStatementFileProcessQuery,
+    query: getDataQuery,
     variables: {
       accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
       walletId: "5694a155-960a-4553-8e92-c16dfaec0509",

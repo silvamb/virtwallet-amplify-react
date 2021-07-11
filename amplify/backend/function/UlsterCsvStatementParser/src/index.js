@@ -12,7 +12,7 @@ const { parseCsvFile } = require("./ulster-csv-statement-parser");
 const { graphqlOperation } = require("virtwallet-graphql-client");
 const log = require("loglevel");
 
-const getStatementFileProcess = /* GraphQL */ `
+const getDataQuery = /* GraphQL */ `
   query GetStatementFileProcess($accountId: ID!, $walletId: ID!, $id: ID!) {
     getStatementFileProcess(
       accountId: $accountId
@@ -29,6 +29,17 @@ const getStatementFileProcess = /* GraphQL */ `
         statusDate
         statusMessage
         success
+      }
+    }
+    getAccount(id: $accountId) {
+      monthStartDateRule {
+        currentMonth
+        dayOfMonth
+        manuallySetPeriods {
+          endDate
+          month
+          startDate
+        }
       }
     }
   }
@@ -88,11 +99,12 @@ async function processRecord(record) {
   log.debug(`Retrieved process ID from Metadata: [${processId}]`);
 
   const { accountId, walletId, fileName } = getInfoFromObjKey(s3Key);
-  const fileRecord = await updateRecord({ accountId, walletId, processId });
+  const data = await getData({ accountId, walletId, processId });
+  const fileRecord = await updateRecord(data);
 
   try {
     log.info(`Parsing transactions from file ${fileName}`);
-    const transactions = await parseCsvFile(s3Stream);
+    const transactions = await parseCsvFile(s3Stream, data.getAccount.monthStartDateRule);
 
     return {
       accountId,
@@ -132,28 +144,33 @@ function getProcessId(request) {
   });
 }
 
-async function updateRecord({ accountId, walletId, processId }) {
-  log.debug(
-    "Retrieving statement file process",
+async function getData({ accountId, walletId, processId }) {
+  log.debug("Retrieving data", {
     accountId,
     walletId,
-    processId
-  );
-  const { data, errors: createErrors } = await graphqlOperation({
-    query: getStatementFileProcess,
+    processId,
+  });
+  const { data, errors } = await graphqlOperation({
+    query: getDataQuery,
     variables: { accountId, walletId, id: processId },
   });
 
-  if (createErrors) {
+  if (errors) {
     log.error(
-      "Error retrieving the statement file process in GraphQL API",
-      createErrors
+      "Error retrieving data from GraphQL API",
+      errors
     );
-    throw new Error("Error retrieving the statement file process");
+    throw new Error("Error retrieving data");
   }
 
-  const currentRecord = data.getStatementFileProcess;
+  const {getStatementFileProcess, getAccount} = data;
+  return {
+    getStatementFileProcess,
+    getAccount
+  };
+}
 
+async function updateRecord({ getStatementFileProcess: currentRecord }) {
   const updated = {
     currentStatus: "PARSING",
     history: currentRecord.history.concat([
@@ -215,5 +232,5 @@ async function updateRecordOnError(currentRecord) {
   }
 }
 
-exports.getStatementFileProcessQuery = getStatementFileProcess;
+exports.getDataQuery = getDataQuery;
 exports.updateStatementFileProcessMutation = updateStatementFileProcess;

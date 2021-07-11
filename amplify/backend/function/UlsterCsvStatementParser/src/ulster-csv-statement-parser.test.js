@@ -17,6 +17,7 @@ test("Test parsing C/L type transaction", async () => {
     value: "20.00",
     balanceType: "DEBIT",
     keyword: "GET CASH",
+    referenceMonth: "2020-01",
   });
 });
 
@@ -33,6 +34,7 @@ test("Test parsing C/L type transaction starting with the date", async () => {
     value: "20.00",
     balanceType: "DEBIT",
     keyword: "CL WITH CARD",
+    referenceMonth: "2020-01",
   });
 });
 
@@ -49,6 +51,7 @@ test("Test parsing POS type transaction with 3 lines in description", async () =
     value: "0.15",
     balanceType: "DEBIT",
     keyword: "POS 3 LINES",
+    referenceMonth: "2020-01",
   });
 });
 
@@ -65,6 +68,7 @@ test("Test parsing POS type transaction with 2 lines in description", async () =
     value: "1500.60",
     balanceType: "DEBIT",
     keyword: "POS 2 LINES",
+    referenceMonth: "2020-01",
   });
 });
 
@@ -81,6 +85,7 @@ test("Test parsing POS type transaction with 2 single in description", async () 
     value: "100.10",
     balanceType: "DEBIT",
     keyword: "POS 1 LINE",
+    referenceMonth: "2020-01",
   });
 });
 
@@ -97,5 +102,6 @@ test("Test parsing POS type with day before", async () => {
     value: "10.51",
     balanceType: "DEBIT",
     keyword: "POS DAY BEFORE",
+    referenceMonth: "2020-01",
   });
 });

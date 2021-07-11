@@ -8,26 +8,28 @@ const stream = require("stream");
 const util = require("util");
 const finished = util.promisify(stream.finished);
 
+const { MonthStartDateRule } = require('./month-start-date-rule');
+
 const DEBIT_BALANCE_TYPE = "DEBIT";
 const CREDIT_BALANCE_TYPE = "CREDIT";
 
 const POS_TX_REGEX = /^(\d{4}) (\d\d[A-Z]{3}\d\d) /;
 const CL_REGEX = /(.*) (\d\d[A-Z]{3})$/;
 
-exports.parseCsvFile = async (s3Stream) => {
-  const transactions = await readTransactions(s3Stream);
+exports.parseCsvFile = async (s3Stream, monthStartDateRule) => {
+  const transactions = await readTransactions(s3Stream, monthStartDateRule);
 
   log.info(`Total transactions parsed [${transactions.length}]`);
 
   return transactions;
 };
 
-async function readTransactions(fileStream) {
+async function readTransactions(fileStream, monthStartDateRule) {
   const results = [];
   const dayCounter = new Map();
   fileStream
     .pipe(csv({ headers: false, skipLines: 3 }))
-    .on("data", (data) => results.push(parseLine(data, dayCounter)))
+    .on("data", (data) => results.push(parseLine(data, dayCounter, monthStartDateRule)))
     .on("end", () => {
       log.info("Finished reading CSV");
     });
@@ -38,7 +40,7 @@ async function readTransactions(fileStream) {
   return results;
 }
 
-function parseLine(fields, dayCounter) {
+function parseLine(fields, dayCounter, monthStartDateRule) {
   const txRawPostDate = moment.utc(fields[0], "DD/MM/YYYY", true);
 
   const transaction = {
@@ -68,6 +70,9 @@ function parseLine(fields, dayCounter) {
       .substring(0, keywordEnd)
       .trim();
   }
+
+  const startDateRule = new MonthStartDateRule(monthStartDateRule);
+  transaction.referenceMonth = startDateRule.getMonth(transaction.date);
 
   return transaction;
 }
