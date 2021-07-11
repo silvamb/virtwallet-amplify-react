@@ -107,7 +107,7 @@ type Transaction
   walletId: ID!
   wallet: Wallet @connection(fields: ["walletId"])
   date: AWSDate!
-  categoryId: ID!
+  categoryId: ID
   category: Category @connection(fields: ["categoryId"])
   dt: AWSDateTime
   referenceMonth: String!
