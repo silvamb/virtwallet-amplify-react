@@ -74,16 +74,18 @@ function TransactionListItem({
   date,
   id,
   description,
-  value
+  value,
+  balanceType,
 }) {
   const to = `/account/${accountId}/wallet/${walletId}/transaction/${date}/${id}`;
 
+  const signal = balanceType === "CREDIT" ? "+" : "-"
   return (
     <SimpleListItem
       key={id}
       primary={description}
       secondary={date}
-      extra={`€${value}`}
+      extra={`${signal}${value}`}
       to={to}
     />
   );
