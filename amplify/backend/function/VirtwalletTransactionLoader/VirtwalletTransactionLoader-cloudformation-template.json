@@ -35,10 +35,6 @@
     "functionvirtwalletbackendVirtwalletLibLayerArn": {
       "Type": "String",
       "Default": "functionvirtwalletbackendVirtwalletLibLayerArn"
-    },
-    "functionVirtwalletTransactionLoaderName": {
-      "Type": "String",
-      "Default": "functionVirtwalletTransactionLoaderName"
     }
   },
   "Conditions": {
@@ -71,12 +67,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "VirtwalletTransactionClassifier",
+            "VirtwalletTransactionLoader",
             {
               "Fn::Join": [
                 "",
                 [
-                  "VirtwalletTransactionClassifier",
+                  "VirtwalletTransactionLoader",
                   "-",
                   {
                     "Ref": "env"
@@ -102,9 +98,6 @@
             },
             "API_VIRTWALLETBACKEND_GRAPHQLAPIKEYOUTPUT": {
               "Ref": "apivirtwalletbackendGraphQLAPIKeyOutput"
-            },
-            "FUNCTION_VIRTWALLETTRANSACTIONLOADER_NAME": {
-              "Ref": "functionVirtwalletTransactionLoaderName"
             }
           }
         },
@@ -132,12 +125,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "virtwalletbackendLambdaRole5fe45413",
+            "virtwalletbackendLambdaRole97aa4549",
             {
               "Fn::Join": [
                 "",
                 [
-                  "virtwalletbackendLambdaRole5fe45413",
+                  "virtwalletbackendLambdaRole97aa4549",
                   "-",
                   {
                     "Ref": "env"
@@ -226,6 +219,9 @@
             {
               "Effect": "Allow",
               "Action": [
+                "appsync:Create*",
+                "appsync:StartSchemaCreation",
+                "appsync:GraphQL",
                 "appsync:Get*",
                 "appsync:List*",
                 "appsync:Update*"
@@ -246,25 +242,16 @@
                       ":apis/",
                       {
                         "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
-                      }
+                      },
+                      "/*"
                     ]
                   ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "lambda:Get*",
-                "lambda:List*",
-                "lambda:Invoke*"
-              ],
-              "Resource": [
+                },
                 {
                   "Fn::Join": [
                     "",
                     [
-                      "arn:aws:lambda:",
+                      "arn:aws:appsync:",
                       {
                         "Ref": "AWS::Region"
                       },
@@ -272,9 +259,9 @@
                       {
                         "Ref": "AWS::AccountId"
                       },
-                      ":function:",
+                      ":apis/",
                       {
-                        "Ref": "functionVirtwalletTransactionLoaderName"
+                        "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
                       }
                     ]
                   ]
@@ -283,40 +270,6 @@
             }
           ]
         }
-      }
-    },
-    "TransactionsClassifierToLoaderDestination": {
-      "Type": "AWS::Lambda::EventInvokeConfig",
-      "Properties": {
-        "DestinationConfig": {
-          "OnSuccess": {
-            "Destination": {
-              "Fn::Join": [
-                "",
-                [
-                  "arn:aws:lambda:",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ":",
-                  {
-                    "Ref": "AWS::AccountId"
-                  },
-                  ":function:",
-                  {
-                    "Ref": "functionVirtwalletTransactionLoaderName"
-                  }
-                ]
-              ]
-            }
-          }
-        },
-        "FunctionName": {
-          "Ref": "LambdaFunction"
-        },
-        "MaximumEventAgeInSeconds": 300,
-        "MaximumRetryAttempts": 0,
-        "Qualifier": "$LATEST"
       }
     }
   },

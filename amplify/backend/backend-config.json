@@ -97,6 +97,43 @@
         },
         {
           "category": "function",
+          "resourceName": "VirtwalletTransactionLoader",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletbackendVirtwalletGraphQL",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletbackendVirtwalletLibLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "VirtwalletTransactionLoader": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "virtwalletbackend",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "function",
           "resourceName": "virtwalletbackendVirtwalletGraphQL",
           "attributes": [
             "Arn"

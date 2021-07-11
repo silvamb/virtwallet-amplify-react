@@ -2,13 +2,9 @@
   "permissions": {
     "api": {
       "virtwalletbackend": [
+        "create",
         "read",
         "update"
-      ]
-    },
-    "function": {
-      "VirtwalletTransactionLoader": [
-        "read"
       ]
     }
   },
