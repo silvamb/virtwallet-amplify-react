@@ -29,6 +29,12 @@ const ViewStatementFileProcessComponent = ({ item: statementFileProcess }) => {
   const theme = useTheme();
   const classes = useStyles(theme);
 
+  function getStatus(history = [], status) {
+    const entry = history.find(entry => entry.status === status);
+    
+    return entry && !entry.success;
+  }
+
   return (
     <div className={classes.fileInfo}>
       <div className={classes.section}>
@@ -60,13 +66,8 @@ const ViewStatementFileProcessComponent = ({ item: statementFileProcess }) => {
               </StepLabel>
             </Step>
             <Step key="classifying">
-              <StepLabel>
+              <StepLabel error={getStatus(statementFileProcess.history, "CLASSIFYING")}>
                 {intl.formatMessage({ id: "classifying_file" })}
-              </StepLabel>
-            </Step>
-            <Step key="done">
-              <StepLabel>
-                {intl.formatMessage({ id: "done" })}
               </StepLabel>
             </Step>
           </Stepper>
