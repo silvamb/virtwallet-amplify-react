@@ -943,7 +943,6 @@ export const onDeleteTransaction = /* GraphQL */ `
 export const onCreateMetrics = /* GraphQL */ `
   subscription OnCreateMetrics {
     onCreateMetrics {
-      id
       accountId
       account {
         id
@@ -1027,7 +1026,6 @@ export const onCreateMetrics = /* GraphQL */ `
 export const onUpdateMetrics = /* GraphQL */ `
   subscription OnUpdateMetrics {
     onUpdateMetrics {
-      id
       accountId
       account {
         id
@@ -1111,7 +1109,6 @@ export const onUpdateMetrics = /* GraphQL */ `
 export const onDeleteMetrics = /* GraphQL */ `
   subscription OnDeleteMetrics {
     onDeleteMetrics {
-      id
       accountId
       account {
         id

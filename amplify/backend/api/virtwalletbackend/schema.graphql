@@ -134,7 +134,6 @@ enum SourceType {
 type Metrics
   @model
   @key(fields: ["accountId", "date", "walletId", "categoryId"]) {
-  id: ID!
   accountId: ID!
   account: Account @connection(fields: ["accountId"])
   date: String!
@@ -194,6 +193,18 @@ type RequestFileUploadResponse {
   statementFileProcessId: ID!
 }
 
+input IncrementMetricsInput {
+  accountId: ID!
+  date: String!
+  walletId: ID!
+  categoryId: ID!
+  granularity: Granularity
+  sum: Float
+  count: Int
+}
+
 type Mutation {
   requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "RequestFileUpload-${env}")
+
+  incrementMetrics(input: IncrementMetricsInput!): Metrics
 }

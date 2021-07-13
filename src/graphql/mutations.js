@@ -9,6 +9,89 @@ export const requestFileUpload = /* GraphQL */ `
     }
   }
 `;
+export const incrementMetrics = /* GraphQL */ `
+  mutation IncrementMetrics($input: IncrementMetricsInput!) {
+    incrementMetrics(input: $input) {
+      accountId
+      account {
+        id
+        ownerId
+        name
+        description
+        members
+        monthStartDateRule {
+          dayOfMonth
+          currentMonth
+        }
+        wallets {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      date
+      walletId
+      wallet {
+        id
+        accountId
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        ownerId
+        name
+        description
+        balance
+        type
+        statementParserId
+        createdAt
+        updatedAt
+      }
+      categoryId
+      category {
+        accountId
+        id
+        account {
+          id
+          ownerId
+          name
+          description
+          members
+          createdAt
+          updatedAt
+        }
+        name
+        description
+        budget {
+          type
+          value
+        }
+        type
+        categoryRules {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      granularity
+      sum
+      count
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createAccount = /* GraphQL */ `
   mutation CreateAccount(
     $input: CreateAccountInput!
@@ -999,7 +1082,6 @@ export const createMetrics = /* GraphQL */ `
     $condition: ModelMetricsConditionInput
   ) {
     createMetrics(input: $input, condition: $condition) {
-      id
       accountId
       account {
         id
@@ -1086,7 +1168,6 @@ export const updateMetrics = /* GraphQL */ `
     $condition: ModelMetricsConditionInput
   ) {
     updateMetrics(input: $input, condition: $condition) {
-      id
       accountId
       account {
         id
@@ -1173,7 +1254,6 @@ export const deleteMetrics = /* GraphQL */ `
     $condition: ModelMetricsConditionInput
   ) {
     deleteMetrics(input: $input, condition: $condition) {
-      id
       accountId
       account {
         id

@@ -560,7 +560,6 @@ export const getMetrics = /* GraphQL */ `
       walletId: $walletId
       categoryId: $categoryId
     ) {
-      id
       accountId
       account {
         id
@@ -659,7 +658,6 @@ export const listMetricss = /* GraphQL */ `
       sortDirection: $sortDirection
     ) {
       items {
-        id
         accountId
         account {
           id
