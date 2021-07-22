@@ -3,6 +3,7 @@
 	API_VIRTWALLETBACKEND_GRAPHQLAPIIDOUTPUT
 	API_VIRTWALLETBACKEND_GRAPHQLAPIKEYOUTPUT
 	ENV
+	FUNCTION_VIRTWALLETUPDATEMETRICS_NAME
 	REGION
 Amplify Params - DO NOT EDIT */
 const { graphqlOperation } = require("virtwallet-graphql-client");
@@ -13,10 +14,9 @@ exports.createTransaction = /* GraphQL */ `
     $condition: ModelTransactionConditionInput
   ) {
     createTransaction(input: $input, condition: $condition) {
-      id
-      accountId
-      walletId
-      date
+      referenceMonth
+      value
+      categoryId
     }
   }
 `;
@@ -54,41 +54,68 @@ exports.updateStatementFileProcess = /* GraphQL */ `
   }
 `;
 
-exports.handler = async ({ responsePayload = []}) => {
+exports.handler = async ({ responsePayload = [] }) => {
   const promises = responsePayload.map(processRecord);
 
-  await Promise.allSettled(promises);
+  const results = await Promise.allSettled(promises);
+
+  results
+    .filter((result) => result.status === "rejected")
+    .forEach((result, index) =>
+      console.log("Error processing record", index, result.reason)
+    );
+
+  return results
+    .filter((result) => result.status === "fulfilled")
+    .reduce((acc, result) => acc.concat(result.value), []);
 };
 
 async function processRecord(record) {
   const { transactions } = record;
 
-  const promises = transactions.map((transaction) => putTransaction(transaction, record));
+  const promises = transactions.map((transaction) => {
+    return putTransaction(transaction, record);
+  });
 
-  await Promise.allSettled(promises);
-  return updateRecord(record);
+  const results = await Promise.allSettled(promises);
+
+  results
+    .filter((result) => result.status === "rejected")
+    .forEach((result, index) =>
+      console.log("Error processing transaction", index, result.reason)
+    );
+
+  await updateRecord(record);
+
+  const transactionsProjection = results
+    .filter((result) => result.status === "fulfilled" && result.value)
+    .map((result) => result.value);
+
+  const { accountId, walletId } = record;
+  return { accountId, walletId, transactions: transactionsProjection };
 }
 
-async function putTransaction(transaction, {accountId, walletId, fileName}) {
+async function putTransaction(transaction, { accountId, walletId, fileName }) {
   const commonData = {
     accountId,
     walletId,
     source: fileName,
-    sourceType: "AUTOMATIC"
-  }
+    sourceType: "AUTOMATIC",
+  };
 
   console.log("Creating transaction", transaction.id);
-  const { errors } = await graphqlOperation({
+  const { data, errors } = await graphqlOperation({
     query: exports.createTransaction,
-    variables: { input: {...transaction, ...commonData} },
+    variables: { input: { ...transaction, ...commonData } },
   });
 
   if (errors) {
-    console.error(
-      "Error creating transaction in GraphQL API",
-      errors
-    );
+    console.error("Error creating transaction in GraphQL API", errors);
+
+    return undefined;
   }
+
+  return data.createTransaction;
 }
 
 async function updateRecord({ accountId, walletId, processId }) {

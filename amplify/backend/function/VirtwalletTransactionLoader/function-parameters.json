@@ -6,6 +6,11 @@
         "read",
         "update"
       ]
+    },
+    "function": {
+      "VirtwalletUpdateMetrics": [
+        "read"
+      ]
     }
   },
   "lambdaLayers": [

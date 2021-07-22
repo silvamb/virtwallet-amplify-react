@@ -57,6 +57,7 @@
           "date": "2020-01-02",
           "id": "202001020001",
           "dt": "2020-01-02T00:00:00Z",
+          "referenceMonth": "2020-01",
           "description": "POS 1 LINE",
           "type": "POS",
           "balance": "1988.00",
