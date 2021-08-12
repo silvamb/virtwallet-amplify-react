@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "api": {
+      "virtwalletbackend": [
+        "read",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "virtwalletbackendVirtwalletGraphQL",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "virtwalletbackendVirtwalletLibLayer",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ]
+}

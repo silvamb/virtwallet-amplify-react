@@ -1,0 +1,9 @@
+{
+  "typeName": "Mutation",
+  "fieldName": "deleteAccount",
+  "arguments": {
+    "input": {
+      "accountId": "4306bec7-c283-42a8-b67d-04ec3f4dccf6"
+    }
+  }
+}

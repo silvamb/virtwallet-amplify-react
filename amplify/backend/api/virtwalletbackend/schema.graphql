@@ -203,8 +203,27 @@ input IncrementMetricsInput {
   count: Int
 }
 
+type DeleteAllResponse {
+  metricsDeleted: DeleteResult!
+  transactionsDeleted: DeleteResult!
+  walletsDeleted: DeleteResult!
+  categoriesDeleted: DeleteResult!
+  categoryRulesDeleted: DeleteResult!
+  accountDeleted: DeleteResult!
+}
+
+type DeleteResult {
+  deleted: Int!
+  errors: Int!
+}
+
+input DeleteAllInput {
+  accountId: ID!
+}
+
 type Mutation {
   requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "RequestFileUpload-${env}")
 
   incrementMetrics(input: IncrementMetricsInput!): Metrics
+  deleteAll(input: DeleteAllInput): DeleteAllResponse @function(name: "VirtwalletDeleteAccount-${env}")
 }
