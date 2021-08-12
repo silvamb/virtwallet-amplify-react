@@ -1,4 +1,3 @@
-const { readFileSync } = require("fs");
 const mockGraphqlOperation = jest.fn();
 
 jest.mock("virtwallet-graphql-client", () => {
@@ -37,7 +36,6 @@ const event = {
           referenceMonth: "2020-01",
           value: "5.45",
         },
-        ,
         {
           referenceMonth: "2020-02",
           value: "6.56",

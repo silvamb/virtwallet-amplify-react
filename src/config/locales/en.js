@@ -116,7 +116,7 @@ const transactionsMessages = {
 }
 
 const commonMessages = {
-  app_name: 'React Most Wanted',
+  app_name: 'Virtwallet',
   sign_in: 'Sign in',
   sign_out: 'Sign out',
   sign_up: 'Sign up',

@@ -92,6 +92,36 @@ export const incrementMetrics = /* GraphQL */ `
     }
   }
 `;
+export const deleteAll = /* GraphQL */ `
+  mutation DeleteAll($input: DeleteAllInput) {
+    deleteAll(input: $input) {
+      metricsDeleted {
+        deleted
+        errors
+      }
+      transactionsDeleted {
+        deleted
+        errors
+      }
+      walletsDeleted {
+        deleted
+        errors
+      }
+      categoriesDeleted {
+        deleted
+        errors
+      }
+      categoryRulesDeleted {
+        deleted
+        errors
+      }
+      accountDeleted {
+        deleted
+        errors
+      }
+    }
+  }
+`;
 export const createAccount = /* GraphQL */ `
   mutation CreateAccount(
     $input: CreateAccountInput!
