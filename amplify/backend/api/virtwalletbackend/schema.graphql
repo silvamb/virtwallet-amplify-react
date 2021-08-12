@@ -78,7 +78,7 @@ type CategoryRule
   accountId: ID!
   account: Account @connection(fields: ["accountId"])
   categoryId: ID!
-  category: Category  @connection(fields: ["categoryId"])
+  category: Category @connection(fields: ["accountId", "categoryId"])
   ruleType: CategoryRuleType!
   priority: Int
   keyword: String
@@ -108,7 +108,7 @@ type Transaction
   wallet: Wallet @connection(fields: ["walletId"])
   date: AWSDate!
   categoryId: ID
-  category: Category @connection(fields: ["categoryId"])
+  category: Category @connection(fields: ["accountId", "categoryId"])
   dt: AWSDateTime
   referenceMonth: String!
   value: Float!
