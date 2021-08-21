@@ -13,10 +13,20 @@ exports.handler = async (event) => {
   console.log("Deleting account", accountId);
 
   const metricsDeleted = await deleteMetrics(accountId);
+  console.log("Metrics deleted", metricsDeleted);
+
   const transactionsDeleted = await deleteTransactions(accountId);
+  console.log("Transactions deleted", metricsDeleted);
+
   const walletsDeleted = await deleteWallets(accountId);
+  console.log("Wallets deleted", metricsDeleted);
+
   const categoriesDeleted = await deleteCategories(accountId);
+  console.log("Metrics deleted", metricsDeleted);
+
   const categoryRulesDeleted = await deleteCategoryRules(accountId);
+  console.log("Category Rules deleted", metricsDeleted);
+
   const accountDeleted = await deleteAccount(accountId);
 
   console.log("Account deleted", accountId);
@@ -37,11 +47,13 @@ async function deleteAll({ queryParams, query, mutation, queryName }) {
   let errorCount = 0;
 
   do {
+    console.log("Executing query", queryName);
     const { data } = await graphqlOperation({
       query,
       variables: { ...queryParams, nextToken },
     });
 
+    console.log("Total returned for query", queryName, data[queryName].items.length);
     for (let item of data[queryName].items) {
       const { errors } = await graphqlOperation({
         query: mutation,
@@ -66,6 +78,7 @@ async function deleteAll({ queryParams, query, mutation, queryName }) {
 }
 
 function deleteMetrics(accountId) {
+  console.log("Deleting metrics from account", accountId);
   return deleteAll({
     queryParams: { accountId },
     mutation: queries.deleteMetrics,
@@ -74,7 +87,8 @@ function deleteMetrics(accountId) {
   });
 }
 
-async function deleteTransactions(accountId) {
+function deleteTransactions(accountId) {
+  console.log("Deleting transactions from account", accountId);
   return deleteAll({
     queryParams: { accountId },
     mutation: queries.deleteTransaction,
@@ -83,7 +97,8 @@ async function deleteTransactions(accountId) {
   });
 }
 
-async function deleteWallets(accountId) {
+function deleteWallets(accountId) {
+  console.log("Deleting wallets from account", accountId);
   return deleteAll({
     queryParams: { filter: { accountId: { eq: accountId } } },
     mutation: queries.deleteWallet,
@@ -92,7 +107,8 @@ async function deleteWallets(accountId) {
   });
 }
 
-async function deleteCategories(accountId) {
+function deleteCategories(accountId) {
+  console.log("Deleting Categories from account", accountId);
   return deleteAll({
     queryParams: { accountId },
     mutation: queries.deleteCategory,
@@ -101,7 +117,8 @@ async function deleteCategories(accountId) {
   });
 }
 
-async function deleteCategoryRules(accountId) {
+function deleteCategoryRules(accountId) {
+  console.log("Deleting Category Rules from account", accountId);
   return deleteAll({
     queryParams: { filter: { accountId: { eq: accountId } } },
     mutation: queries.deleteCategoryRule,
