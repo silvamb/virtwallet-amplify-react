@@ -221,9 +221,42 @@ input DeleteAllInput {
   accountId: ID!
 }
 
+input ImportTransactionsInput {
+  transactions: [ImportTransactionInput]
+}
+
+input ImportTransactionInput {
+  id: ID
+  accountId: ID!
+  walletId: ID!
+  date: AWSDate!
+  categoryId: ID
+  dt: AWSDateTime
+  referenceMonth: String!
+  value: Float!
+  description: String!
+  keyword: String!
+  type: String
+  balance: Float
+  balanceType: BalanceType
+  source: String
+  sourceType: SourceType
+}
+
+type ImportTransactionsResult {
+    data: [String]
+    errors: [ImportTransactionsError]
+}
+
+type ImportTransactionsError {
+    id: String!
+    message: String
+}
+
 type Mutation {
   requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "RequestFileUpload-${env}")
 
   incrementMetrics(input: IncrementMetricsInput!): Metrics
   deleteAll(input: DeleteAllInput): DeleteAllResponse @function(name: "VirtwalletDeleteAccount-${env}")
+  importTransactions(input: ImportTransactionsInput!):ImportTransactionsResult @function(name: "VirtwalletTransactionImporter-${env}")
 }
