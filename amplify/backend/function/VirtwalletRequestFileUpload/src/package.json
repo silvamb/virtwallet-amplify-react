@@ -7,7 +7,7 @@
   "devDependencies": {
     "aws-sdk": "^2.936.0",
     "jest": "^27.0.6",
-    "virtwallet-lib": "link:../../virtwalletampreactLibLayer/lib/virtwallet-lib/src"
+    "virtwallet-lib": "link:../../virtwalletampreactLibLayer/virtwallet-lib/src"
   },
   "scripts": {
     "test": "jest"
