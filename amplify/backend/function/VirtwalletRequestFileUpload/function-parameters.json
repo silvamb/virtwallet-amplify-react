@@ -15,9 +15,16 @@
       "env": "dev"
     }
   ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "accountFilesBucket",
+      "environmentVariableName": "ACCOUNT_FILES_BUCKET"
+    }
+  ],
   "permissions": {
     "api": {
       "virtwalletbackend": [
+        "Query",
         "Mutation"
       ]
     }

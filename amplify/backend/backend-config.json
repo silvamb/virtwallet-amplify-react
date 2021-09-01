@@ -1,87 +1,16 @@
 {
-  "api": {
-    "virtwalletbackend": {
-      "service": "AppSync",
-      "providerPlugin": "awscloudformation",
-      "output": {
-        "authConfig": {
-          "defaultAuthentication": {
-            "authenticationType": "API_KEY",
-            "apiKeyConfig": {
-              "apiKeyExpirationDays": 365,
-              "description": "Virtwallet DEV API Key"
-            }
-          },
-          "additionalAuthenticationProviders": []
-        }
-      }
-    }
-  },
   "function": {
-    "virtwalletbackendVirtwalletGraphQL": {
+    "virtwalletampreactLibLayer": {
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer",
       "build": true
     },
-    "RequestFileUpload": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "virtwalletbackend",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "UlsterCsvStatementParser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "virtwalletbackend",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "VirtwalletTransactionClassifier",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "virtwalletbackendVirtwalletLibLayer": {
+    "virtwalletampreactThirdPartyLibsLayer": {
       "providerPlugin": "awscloudformation",
       "service": "LambdaLayer",
       "build": true
     },
-    "VirtwalletTransactionClassifier": {
+    "VirtwalletRequestFileUpload": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -97,88 +26,14 @@
         },
         {
           "category": "function",
-          "resourceName": "VirtwalletTransactionLoader",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
+          "resourceName": "virtwalletampreactLibLayer",
           "attributes": [
             "Arn"
           ]
         },
         {
           "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletLibLayer",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "VirtwalletTransactionLoader": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "virtwalletbackend",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "VirtwalletUpdateMetrics",
-          "attributes": [
-            "Name"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletLibLayer",
-          "attributes": [
-            "Arn"
-          ]
-        }
-      ]
-    },
-    "VirtwalletUpdateMetrics": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "virtwalletbackend",
-          "attributes": [
-            "GraphQLAPIIdOutput",
-            "GraphQLAPIEndpointOutput",
-            "GraphQLAPIKeyOutput"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
-          "attributes": [
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletLibLayer",
+          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
           "attributes": [
             "Arn"
           ]
@@ -201,14 +56,14 @@
         },
         {
           "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
+          "resourceName": "virtwalletampreactLibLayer",
           "attributes": [
             "Arn"
           ]
         },
         {
           "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletLibLayer",
+          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
           "attributes": [
             "Arn"
           ]
@@ -231,19 +86,67 @@
         },
         {
           "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletGraphQL",
+          "resourceName": "virtwalletampreactLibLayer",
           "attributes": [
             "Arn"
           ]
         },
         {
           "category": "function",
-          "resourceName": "virtwalletbackendVirtwalletLibLayer",
+          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
           "attributes": [
             "Arn"
           ]
         }
       ]
+    },
+    "VirtwalletUlsterCsvStatementParser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "virtwalletbackend",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletampreactLibLayer",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    }
+  },
+  "api": {
+    "virtwalletbackend": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 90,
+              "description": "DEV API Key"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        }
+      }
     }
   }
 }

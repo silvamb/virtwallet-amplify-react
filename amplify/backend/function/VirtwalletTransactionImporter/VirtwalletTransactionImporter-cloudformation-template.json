@@ -16,6 +16,14 @@
     "s3Key": {
       "Type": "String"
     },
+    "functionvirtwalletampreactLibLayerArn": {
+      "Type": "String",
+      "Default": "functionvirtwalletampreactLibLayerArn"
+    },
+    "functionvirtwalletampreactThirdPartyLibsLayerArn": {
+      "Type": "String",
+      "Default": "functionvirtwalletampreactThirdPartyLibsLayerArn"
+    },
     "apivirtwalletbackendGraphQLAPIIdOutput": {
       "Type": "String",
       "Default": "apivirtwalletbackendGraphQLAPIIdOutput"
@@ -27,14 +35,6 @@
     "apivirtwalletbackendGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apivirtwalletbackendGraphQLAPIKeyOutput"
-    },
-    "functionvirtwalletbackendVirtwalletGraphQLArn": {
-      "Type": "String",
-      "Default": "functionvirtwalletbackendVirtwalletGraphQLArn"
-    },
-    "functionvirtwalletbackendVirtwalletLibLayerArn": {
-      "Type": "String",
-      "Default": "functionvirtwalletbackendVirtwalletLibLayerArn"
     }
   },
   "Conditions": {
@@ -110,13 +110,13 @@
         "Runtime": "nodejs14.x",
         "Layers": [
           {
-            "Ref": "functionvirtwalletbackendVirtwalletGraphQLArn"
+            "Ref": "functionvirtwalletampreactThirdPartyLibsLayerArn"
           },
           {
-            "Ref": "functionvirtwalletbackendVirtwalletLibLayerArn"
+            "Ref": "functionvirtwalletampreactLibLayerArn"
           }
         ],
-        "Timeout": "25"
+        "Timeout": 25
       }
     },
     "LambdaExecutionRole": {
@@ -125,12 +125,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "virtwalletbackendLambdaRolec8d78a48",
+            "virtwalletampreactLambdaRole0335a47c",
             {
               "Fn::Join": [
                 "",
                 [
-                  "virtwalletbackendLambdaRolec8d78a48",
+                  "virtwalletampreactLambdaRole0335a47c",
                   "-",
                   {
                     "Ref": "env"
@@ -219,11 +219,7 @@
             {
               "Effect": "Allow",
               "Action": [
-                "appsync:Create*",
-                "appsync:StartSchemaCreation",
-                "appsync:GraphQL",
-                "appsync:Get*",
-                "appsync:List*"
+                "appsync:GraphQL"
               ],
               "Resource": [
                 {
@@ -242,26 +238,7 @@
                       {
                         "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
                       },
-                      "/*"
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:appsync:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":apis/",
-                      {
-                        "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
-                      }
+                      "/types/Mutation/*"
                     ]
                   ]
                 }

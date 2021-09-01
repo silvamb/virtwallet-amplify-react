@@ -1,26 +1,25 @@
 {
-  "permissions": {
-    "api": {
-      "virtwalletbackend": [
-        "create",
-        "read"
-      ]
-    }
-  },
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
-      "resourceName": "virtwalletbackendVirtwalletGraphQL",
+      "resourceName": "virtwalletampreactThirdPartyLibsLayer",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
       "env": "dev"
     },
     {
       "type": "ProjectLayer",
-      "resourceName": "virtwalletbackendVirtwalletLibLayer",
+      "resourceName": "virtwalletampreactLibLayer",
       "version": "Always choose latest version",
       "isLatestVersionSelected": true,
       "env": "dev"
     }
-  ]
+  ],
+  "permissions": {
+    "api": {
+      "virtwalletbackend": [
+        "Mutation"
+      ]
+    }
+  }
 }

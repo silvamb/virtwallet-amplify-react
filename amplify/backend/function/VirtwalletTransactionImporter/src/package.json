@@ -1,13 +1,13 @@
 {
   "name": "virtwallet-transaction-importer",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Import transactions by bulk loading them",
   "main": "index.js",
   "license": "Apache-2.0",
   "devDependencies": {
     "jest": "^27.0.6",
-    "virtwallet-graphql-client": "file:../../virtwalletbackendVirtwalletGraphQL/src",
-    "numeral": "file:../../virtwalletbackendVirtwalletLibLayer/lib/nodejs/node_modules/numeral"
+    "virtwallet-lib": "link:../../virtwalletampreactLibLayer/src",
+    "numeral": "2.0.6"
   },
   "scripts": {
     "test": "jest"

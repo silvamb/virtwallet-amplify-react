@@ -16,14 +16,6 @@
     "s3Key": {
       "Type": "String"
     },
-    "functionvirtwalletampreactLibLayerArn": {
-      "Type": "String",
-      "Default": "functionvirtwalletampreactLibLayerArn"
-    },
-    "functionvirtwalletampreactThirdPartyLibsLayerArn": {
-      "Type": "String",
-      "Default": "functionvirtwalletampreactThirdPartyLibsLayerArn"
-    },
     "apivirtwalletbackendGraphQLAPIIdOutput": {
       "Type": "String",
       "Default": "apivirtwalletbackendGraphQLAPIIdOutput"
@@ -35,6 +27,17 @@
     "apivirtwalletbackendGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apivirtwalletbackendGraphQLAPIKeyOutput"
+    },
+    "functionvirtwalletampreactLibLayerArn": {
+      "Type": "String",
+      "Default": "functionvirtwalletampreactLibLayerArn"
+    },
+    "functionvirtwalletampreactThirdPartyLibsLayerArn": {
+      "Type": "String",
+      "Default": "functionvirtwalletampreactThirdPartyLibsLayerArn"
+    },
+    "accountFilesBucket": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -67,12 +70,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "VirtwalletDeleteAccount",
+            "VirtwalletUlsterCsvStatementParser",
             {
               "Fn::Join": [
                 "",
                 [
-                  "VirtwalletDeleteAccount",
+                  "VirtwalletUlsterCsvStatementParser",
                   "-",
                   {
                     "Ref": "env"
@@ -98,6 +101,9 @@
             },
             "API_VIRTWALLETBACKEND_GRAPHQLAPIKEYOUTPUT": {
               "Ref": "apivirtwalletbackendGraphQLAPIKeyOutput"
+            },
+            "ACCOUNT_FILES_BUCKET": {
+              "Ref": "accountFilesBucket"
             }
           }
         },
@@ -125,12 +131,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "virtwalletampreactLambdaRole523564b4",
+            "virtwalletampreactLambdaRole12c0c530",
             {
               "Fn::Join": [
                 "",
                 [
-                  "virtwalletampreactLambdaRole523564b4",
+                  "virtwalletampreactLambdaRole12c0c530",
                   "-",
                   {
                     "Ref": "env"
@@ -238,11 +244,66 @@
                       {
                         "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
                       },
+                      "/types/Query/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apivirtwalletbackendGraphQLAPIIdOutput"
+                      },
                       "/types/Mutation/*"
                     ]
                   ]
                 }
               ]
+            }
+          ]
+        }
+      }
+    },
+    "S3BucketResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "s3-access-lambda-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:s3:::${accountFilesBucket}/statement-files/ulster_csv/*",
+                  {
+                    "accountFilesBucket": {
+                      "Ref": "accountFilesBucket"
+                    }
+                  }
+                ]
+              }
             }
           ]
         }

@@ -5,7 +5,7 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
-const { graphqlOperation } = require("virtwallet-graphql-client");
+const { graphqlOperation } = require("virtwallet-lib/virtwallet-graphql-client");
 const createTransaction = /* GraphQL */ `
   mutation CreateTransaction(
     $input: CreateTransactionInput!

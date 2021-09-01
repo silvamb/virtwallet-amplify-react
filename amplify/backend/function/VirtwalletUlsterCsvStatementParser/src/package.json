@@ -1,13 +1,17 @@
 {
-  "name": "virtwallet-delete-account",
+  "name": "ulster-csv-statement-parser",
   "version": "1.0.0",
-  "description": "Delete an account and all its records",
+  "description": "Parses a CSV Statement file from Ulster Bank",
   "main": "index.js",
   "license": "Apache-2.0",
   "devDependencies": {
+    "aws-sdk": "^2.939.0",
     "jest": "^27.0.6",
+    "moment": "2.29.1",
+    "csv-parser": "3.0.0",
     "virtwallet-lib": "link:../../virtwalletampreactLibLayer/lib/virtwallet-lib/src"
   },
+  "dependencies": {},
   "scripts": {
     "test": "jest"
   }

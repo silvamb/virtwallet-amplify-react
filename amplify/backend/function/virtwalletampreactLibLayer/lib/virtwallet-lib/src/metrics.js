@@ -1,7 +1,7 @@
-const { graphqlOperation } = require("virtwallet-lib/virtwallet-graphql-client");
-const numeral = require('numeral');
+const numeral = require("numeral");
+const { graphqlOperation, GraphQLError } = require("./virtwallet-graphql-client");
 
-exports.incrementMetrics = /* GraphQL */ `
+exports.incrementMetricsQuery = /* GraphQL */ `
   mutation IncrementMetrics($input: IncrementMetricsInput!) {
     incrementMetrics(input: $input) {
       date
@@ -13,32 +13,36 @@ exports.incrementMetrics = /* GraphQL */ `
   }
 `;
 
-exports.processRecord = async (record) => {
-  const { accountId, walletId, transactions } = record;
-  console.log("Processing", transactions.length, "transactions for", accountId, walletId);
+exports.incrementMetrics = async ({ accountId, walletId, transactions }) => {
+  console.log(
+    "Calculating metrics for",
+    transactions.length,
+    accountId,
+    walletId
+  );
 
   const metricsMap = transactions.reduce(reducer, new Map());
 
   const promises = [];
   metricsMap.forEach((value, key) => {
-    promises.push(updateMetric(key, value, record));
+    promises.push(updateMetric({ key, metric: value, accountId, walletId }));
   });
 
   const results = await Promise.allSettled(promises);
 
-  results
-    .filter((result) => result.status === "rejected")
-    .forEach((result, index) =>
-      console.error("Error updating metrics transaction", index, result.reason)
-    );
+  const errors = results
+  .filter((result) => result.status === "rejected")
+  .map((result) => result.reason);
 
-  const updatedMetrics = results
-    .filter((result) => result.status === "fulfilled" && result.value)
-    .map((result) => result.value);
+  const data = results
+  .filter((result) => result.status === "fulfilled")
+  .map((result) => result.value); 
 
-  console.log("Total of", transactions.length, "metrics processed for", accountId, walletId);
-  return { accountId, walletId, updatedMetrics };
-}
+  return {
+    data,
+    errors
+  }
+};
 
 function reducer(metricsMap = new Map(), transaction) {
   const yearKey = transaction.referenceMonth.substring(0, 4);
@@ -60,7 +64,7 @@ function increment(metricsMap, datePart, { categoryId, value = "0" }) {
   }
 }
 
-async function updateMetric(key, metric, { accountId, walletId }) {
+async function updateMetric({ key, metric, accountId, walletId }) {
   const [date, categoryId] = key.split("#");
 
   const input = {
@@ -74,13 +78,13 @@ async function updateMetric(key, metric, { accountId, walletId }) {
   };
 
   const { data, errors } = await graphqlOperation({
-    query: exports.incrementMetrics,
+    query: exports.incrementMetricsQuery,
     variables: { input },
   });
 
   if (errors) {
     console.log("Error updating metrics in GraphQL API", errors);
-    throw new Error("Error updating metrics: " + JSON.stringify(input));
+    throw new GraphQLError("Error updating metrics", errors);
   }
 
   return data.incrementMetrics;

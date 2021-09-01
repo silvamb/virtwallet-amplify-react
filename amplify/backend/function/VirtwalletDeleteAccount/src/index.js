@@ -5,7 +5,7 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
-const { graphqlOperation } = require("virtwallet-graphql-client");
+const { graphqlOperation } = require("virtwallet-lib/virtwallet-graphql-client");
 const queries = require("./queries");
 
 exports.handler = async (event) => {

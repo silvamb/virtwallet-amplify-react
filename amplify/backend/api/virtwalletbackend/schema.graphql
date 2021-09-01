@@ -254,7 +254,7 @@ type ImportTransactionsError {
 }
 
 type Mutation {
-  requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "RequestFileUpload-${env}")
+  requestFileUpload(input: RequestFileUploadInput): RequestFileUploadResponse @function(name: "VirtwalletRequestFileUpload-${env}")
 
   incrementMetrics(input: IncrementMetricsInput!): Metrics
   deleteAll(input: DeleteAllInput): DeleteAllResponse @function(name: "VirtwalletDeleteAccount-${env}")

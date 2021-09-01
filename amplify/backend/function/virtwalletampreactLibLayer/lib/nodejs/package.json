@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "aws-sdk": "^2.976.0",
+    "virtwallet-lib": "link:../virtwallet-lib"
+  }
+}

@@ -154,8 +154,8 @@ export const getCategory = /* GraphQL */ `
     }
   }
 `;
-export const listCategorys = /* GraphQL */ `
-  query ListCategorys(
+export const listCategories = /* GraphQL */ `
+  query ListCategories(
     $accountId: ID
     $id: ModelIDKeyConditionInput
     $filter: ModelCategoryFilterInput
@@ -163,7 +163,7 @@ export const listCategorys = /* GraphQL */ `
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listCategorys(
+    listCategories(
       accountId: $accountId
       id: $id
       filter: $filter
@@ -640,8 +640,8 @@ export const getMetrics = /* GraphQL */ `
     }
   }
 `;
-export const listMetricss = /* GraphQL */ `
-  query ListMetricss(
+export const listMetrics = /* GraphQL */ `
+  query ListMetrics(
     $accountId: ID
     $dateWalletIdCategoryId: ModelMetricsPrimaryCompositeKeyConditionInput
     $filter: ModelMetricsFilterInput
@@ -649,7 +649,7 @@ export const listMetricss = /* GraphQL */ `
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listMetricss(
+    listMetrics(
       accountId: $accountId
       dateWalletIdCategoryId: $dateWalletIdCategoryId
       filter: $filter
@@ -768,8 +768,8 @@ export const getStatementFileProcess = /* GraphQL */ `
     }
   }
 `;
-export const listStatementFileProcesss = /* GraphQL */ `
-  query ListStatementFileProcesss(
+export const listStatementFileProcesses = /* GraphQL */ `
+  query ListStatementFileProcesses(
     $accountId: ID
     $walletIdId: ModelStatementFileProcessPrimaryCompositeKeyConditionInput
     $filter: ModelStatementFileProcessFilterInput
@@ -777,7 +777,7 @@ export const listStatementFileProcesss = /* GraphQL */ `
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listStatementFileProcesss(
+    listStatementFileProcesses(
       accountId: $accountId
       walletIdId: $walletIdId
       filter: $filter

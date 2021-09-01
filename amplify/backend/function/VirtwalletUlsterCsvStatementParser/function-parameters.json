@@ -1,4 +1,12 @@
 {
+  "permissions": {
+    "api": {
+      "virtwalletbackend": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
@@ -15,11 +23,10 @@
       "env": "dev"
     }
   ],
-  "permissions": {
-    "api": {
-      "virtwalletbackend": [
-        "Mutation"
-      ]
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "accountFilesBucket",
+      "environmentVariableName": "ACCOUNT_FILES_BUCKET"
     }
-  }
+  ]
 }

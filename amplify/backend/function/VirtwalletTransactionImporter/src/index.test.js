@@ -1,6 +1,6 @@
 const mockGraphqlOperation = jest.fn();
 
-jest.mock("virtwallet-graphql-client", () => {
+jest.mock("virtwallet-lib/virtwallet-graphql-client", () => {
   return { graphqlOperation: mockGraphqlOperation };
 });
 
