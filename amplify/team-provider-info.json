@@ -20,6 +20,11 @@
         "virtwalletampreactLibLayer": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
           "s3Key": "amplify-builds/virtwalletampreactLibLayer-LambdaLayerVersione41779da-build.zip"
+        },
+        "VirtwalletRequestFileUpload": {
+          "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/VirtwalletRequestFileUpload-3856313575505a436a79-build.zip"
         }
       }
     }

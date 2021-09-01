@@ -26,14 +26,14 @@
         },
         {
           "category": "function",
-          "resourceName": "virtwalletampreactLibLayer",
+          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
           "attributes": [
             "Arn"
           ]
         },
         {
           "category": "function",
-          "resourceName": "virtwalletampreactThirdPartyLibsLayer",
+          "resourceName": "virtwalletampreactLibLayer",
           "attributes": [
             "Arn"
           ]
