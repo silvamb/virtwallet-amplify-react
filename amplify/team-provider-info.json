@@ -16,6 +16,10 @@
         "virtwalletampreactThirdPartyLibsLayer": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
           "s3Key": "amplify-builds/virtwalletampreactThirdPartyLibsLayer-LambdaLayerVersionc667c852-build.zip"
+        },
+        "virtwalletampreactLibLayer": {
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/virtwalletampreactLibLayer-LambdaLayerVersione41779da-build.zip"
         }
       }
     }
