@@ -1,41 +1,21 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-virtwalletampreact-dev-221529-authRole",
-      "UnauthRoleArn": "arn:aws:iam::031992068000:role/amplify-virtwalletampreact-dev-221529-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::031992068000:role/amplify-virtwalletampreact-dev-221529-authRole",
+      "AuthRoleName": "amplify-virtwalletampreact-dev-223525-authRole",
+      "UnauthRoleArn": "arn:aws:iam::031992068000:role/amplify-virtwalletampreact-dev-223525-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::031992068000:role/amplify-virtwalletampreact-dev-223525-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-      "UnauthRoleName": "amplify-virtwalletampreact-dev-221529-unauthRole",
-      "StackName": "amplify-virtwalletampreact-dev-221529",
-      "StackId": "arn:aws:cloudformation:eu-west-1:031992068000:stack/amplify-virtwalletampreact-dev-221529/6a63cae0-0520-11ec-a0bd-0acd88d7026b",
-      "AmplifyAppId": "d3py1xipom0vg2"
+      "DeploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+      "UnauthRoleName": "amplify-virtwalletampreact-dev-223525-unauthRole",
+      "StackName": "amplify-virtwalletampreact-dev-223525",
+      "StackId": "arn:aws:cloudformation:eu-west-1:031992068000:stack/amplify-virtwalletampreact-dev-223525/86aad980-0b6c-11ec-b025-06ef7d080113",
+      "AmplifyAppId": "d2dj4236k2qklo"
     },
     "categories": {
       "function": {
-        "VirtwalletRequestFileUpload": {
-          "deploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-          "s3Key": "amplify-builds/VirtwalletRequestFileUpload-72366b2b54756f785052-build.zip",
-          "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot"
-        },
         "virtwalletampreactThirdPartyLibsLayer": {
-          "deploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-          "s3Key": "amplify-builds/virtwalletampreactThirdPartyLibsLayer-LambdaLayerVersiond0b6e580-build.zip"
-        },
-        "virtwalletampreactLibLayer": {
-          "deploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-          "s3Key": "amplify-builds/virtwalletampreactLibLayer-LambdaLayerVersion11033c5a-build.zip"
-        },
-        "VirtwalletDeleteAccount": {
-          "deploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-          "s3Key": "amplify-builds/VirtwalletDeleteAccount-5754717a6b66314a716a-build.zip"
-        },
-        "VirtwalletTransactionImporter": {
-          "deploymentBucketName": "amplify-virtwalletampreact-dev-221529-deployment",
-          "s3Key": "amplify-builds/VirtwalletTransactionImporter-3656373772393333476c-build.zip"
-        },
-        "VirtwalletUlsterCsvStatementParser": {
-          "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot"
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/virtwalletampreactThirdPartyLibsLayer-LambdaLayerVersionc667c852-build.zip"
         }
       }
     }
