@@ -15,7 +15,7 @@
       "function": {
         "virtwalletampreactThirdPartyLibsLayer": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
-          "s3Key": "amplify-builds/virtwalletampreactThirdPartyLibsLayer-LambdaLayerVersionc667c852-build.zip"
+          "s3Key": "amplify-builds/virtwalletampreactThirdPartyLibsLayer-LambdaLayerVersion85f9409b-build.zip"
         },
         "virtwalletampreactLibLayer": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
@@ -25,6 +25,11 @@
           "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
           "s3Key": "amplify-builds/VirtwalletRequestFileUpload-3954413839574d565a4d-build.zip"
+        },
+        "VirtwalletUlsterCsvStatementParser": {
+          "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/VirtwalletUlsterCsvStatementParser-586c7076433141464d49-build.zip"
         }
       }
     }

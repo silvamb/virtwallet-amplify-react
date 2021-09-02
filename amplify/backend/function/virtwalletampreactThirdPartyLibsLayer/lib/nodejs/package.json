@@ -2,11 +2,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "csv-parser": "3.0.0",
     "moment": "2.29.1",
     "numeral": "2.0.6",
     "winston": "3.3.3"
-  }
+  },
+  "devDependencies": {}
 }
