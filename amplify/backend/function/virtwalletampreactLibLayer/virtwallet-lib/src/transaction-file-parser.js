@@ -13,23 +13,6 @@ const {
 const { S3 } = require("aws-sdk");
 const s3 = new S3();
 
-const listCategoryRulesQuery = /* GraphQL */ `
-  query ListCategoryRules($limit: Int, $nextToken: String) {
-    listCategoryRules(filter: { accountId: { eq: $accountId } }) {
-      items {
-        categoryId
-        keyword
-        name
-        parameter
-        priority
-        ruleType
-        type
-      }
-      nextToken
-    }
-  }
-`;
-
 const getAccountQuery = /* GraphQL */ `
   query GetAccount($accountId: ID!) {
     getAccount(id: $accountId) {
@@ -168,7 +151,7 @@ async function updateFileProcessRecord({
   }
 }
 
-async function getData(accountId) {
+async function getAccountData(accountId) {
   logger.debug("Retrieving account data", { accountId });
   const { data: getAccountResult, errors: getAccountErrors } =
     await graphqlOperation({
@@ -181,25 +164,7 @@ async function getData(accountId) {
     throw new GraphQLError("Error retrieving account data", getAccountErrors);
   }
 
-  logger.debug("Retrieving category rules", { accountId });
-  const { data: getCategoryRulesResult, errors: getCategoryRulesErrors } =
-    await graphqlOperation({
-      query: listCategoryRulesQuery,
-      variables: { accountId },
-    });
-
-  if (getCategoryRulesErrors) {
-    logger.error("Error retrieving data from GraphQL API", getAccountErrors);
-    throw new GraphQLError(
-      "Error retrieving category rules",
-      getCategoryRulesErrors
-    );
-  }
-
-  return {
-    account: getAccountResult.getAccount,
-    categoryRules: getCategoryRulesResult.listCategoryRules,
-  };
+  return getAccountResult.getAccount;
 }
 
 async function parseTransactions({
@@ -211,15 +176,15 @@ async function parseTransactions({
   s3Stream,
 }) {
   try {
-    const data = await getData(accountId);
+    const account = await getAccountData(accountId);
 
     logger.info("Processing transactions from file", { fileName });
     const transactions = await parseCsvFile(
       s3Stream,
-      data.account.monthStartDateRule
+      account.monthStartDateRule
     );
 
-    classify(transactions, data.categoryRules);
+    await classify(accountId, transactions);
 
     logger.info("Finished processing transactions from file", fileName);
 
@@ -240,4 +205,3 @@ async function parseTransactions({
 }
 
 exports.getAccountQuery = getAccountQuery;
-exports.listCategoryRulesQuery = listCategoryRulesQuery;

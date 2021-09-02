@@ -1,6 +1,50 @@
-exports.classify = (transactions, categoryRules) => {
+const { logger } = require("./logger");
+const {
+  GraphQLError,
+  graphqlOperation,
+} = require("./virtwallet-graphql-client");
+
+const listCategoryRulesQuery = /* GraphQL */ `
+  query ListCategoryRules($accountId: ID!, $nextToken: String) {
+    listCategoryRules(filter: { accountId: { eq: $accountId }}, nextToken: $nextToken) {
+      items {
+        categoryId
+        keyword
+        name
+        parameter
+        priority
+        ruleType
+        type
+      }
+      nextToken
+    }
+  }
+`;
+
+const classify = async (accountId, transactions) => {
+
+  const categoryRules = await getCategoryRules(accountId);
+
   transactions.forEach((tx) => classifyTransaction(tx, categoryRules));
 };
+
+async function getCategoryRules(accountId) {
+  logger.info("Retrieving category rules", { accountId });
+  const { data, errors } =
+    await graphqlOperation({
+      query: listCategoryRulesQuery,
+      variables: { accountId },
+    });
+
+  if (errors) {
+    throw new GraphQLError(
+      "Error retrieving category rules",
+      errors
+    );
+  }
+
+  return data.listCategoryRules.items;
+}
 
 function classifyTransaction(transaction, categoryRulesList) {
   const categoryRules = new CategoryRules(categoryRulesList);
@@ -12,7 +56,7 @@ function classifyTransaction(transaction, categoryRulesList) {
   if (rule) {
     transaction.categoryId = rule.categoryId;
   } else {
-    console.log(`Transaction ${transaction.id} not classified`);
+    logger.debug("Transaction not classified", {transaction});
   }
 }
 
@@ -47,3 +91,6 @@ class CategoryRules {
     );
   }
 }
+
+exports.listCategoryRulesQuery = listCategoryRulesQuery;
+exports.classify = classify;

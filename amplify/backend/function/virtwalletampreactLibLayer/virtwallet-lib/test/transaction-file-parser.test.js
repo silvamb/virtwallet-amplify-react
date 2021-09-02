@@ -48,7 +48,6 @@ process.env.ACCOUNT_FILES_BUCKET = "s3Bucket";
 
 const {
   getAccountQuery,
-  listCategoryRulesQuery,
   processRecord,
 } = require("../src/transaction-file-parser");
 
@@ -101,11 +100,6 @@ it("should process transactions with success", async () => {
     variables: { accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6" },
   });
 
-  expect(mockGraphqlOperation).toHaveBeenCalledWith({
-    query: listCategoryRulesQuery,
-    variables: { accountId: "4306bec7-c283-42a8-b67d-04ec3f4dccf6" },
-  });
-
   expect(mockCreateReadStream).toHaveBeenCalled();
 
   expect(parseCsvFile).toHaveBeenCalledWith(
@@ -114,8 +108,8 @@ it("should process transactions with success", async () => {
   );
 
   expect(mockClassifier).toHaveBeenCalledWith(
-    [],
-    listCategoryRulesResponse.data.listCategoryRules
+    "4306bec7-c283-42a8-b67d-04ec3f4dccf6",
+    []
   );
 
   expect(mockPutTransactions).toHaveBeenCalledWith({

@@ -1,5 +1,6 @@
 {
   "version": "1.0.0",
+  "name": "virtwallet-lib",
   "description": "Virtwallet Lib",
   "main": "src/index.js",
   "dependencies": {},
@@ -11,6 +12,7 @@
     "numeral": "2.0.6",
     "winston": "3.3.3"
   },
+  "license": "MIT",
   "scripts": {
     "test": "jest"
   }
