@@ -30,6 +30,14 @@
           "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
           "s3Key": "amplify-builds/VirtwalletUlsterCsvStatementParser-586c7076433141464d49-build.zip"
+        },
+        "VirtwalletTransactionImporter": {
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/VirtwalletTransactionImporter-3656373772393333476c-build.zip"
+        },
+        "VirtwalletDeleteAccount": {
+          "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
+          "s3Key": "amplify-builds/VirtwalletDeleteAccount-56654a626f5733337253-build.zip"
         }
       }
     }

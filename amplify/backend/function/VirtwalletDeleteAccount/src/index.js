@@ -83,7 +83,7 @@ function deleteMetrics(accountId) {
     queryParams: { accountId },
     mutation: queries.deleteMetrics,
     query: queries.listMetrics,
-    queryName: "listMetricss",
+    queryName: "listMetrics",
   });
 }
 
@@ -113,7 +113,7 @@ function deleteCategories(accountId) {
     queryParams: { accountId },
     mutation: queries.deleteCategory,
     query: queries.listCategories,
-    queryName: "listCategorys",
+    queryName: "listCategories",
   });
 }
 

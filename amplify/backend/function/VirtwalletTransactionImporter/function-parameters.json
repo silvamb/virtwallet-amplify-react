@@ -3,21 +3,22 @@
     {
       "type": "ProjectLayer",
       "resourceName": "virtwalletampreactThirdPartyLibsLayer",
+      "env": "dev",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true,
-      "env": "dev"
+      "isLatestVersionSelected": true
     },
     {
       "type": "ProjectLayer",
       "resourceName": "virtwalletampreactLibLayer",
+      "env": "dev",
       "version": "Always choose latest version",
-      "isLatestVersionSelected": true,
-      "env": "dev"
+      "isLatestVersionSelected": true
     }
   ],
   "permissions": {
     "api": {
       "virtwalletbackend": [
+        "Query",
         "Mutation"
       ]
     }

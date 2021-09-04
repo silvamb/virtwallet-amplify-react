@@ -3,7 +3,7 @@ exports.listMetrics = /* GraphQL */ `
     $accountId: ID!
     $nextToken: String
   ) {
-    listMetricss(
+    listMetrics(
       accountId: $accountId
       nextToken: $nextToken
     ) {
@@ -90,7 +90,7 @@ exports.listCategories = /* GraphQL */ `
     $accountId: ID!
     $nextToken: String
   ) {
-    listCategorys(
+    listCategories(
       accountId: $accountId
       nextToken: $nextToken
     ) {
@@ -114,7 +114,7 @@ exports.deleteCategory = /* GraphQL */ `
 `;
 
 exports.listCategoryRules = /* GraphQL */ `
-  query ListCategoryRule(
+  query ListCategoryRules(
     $filter: ModelCategoryRuleFilterInput
     $nextToken: String
   ) {

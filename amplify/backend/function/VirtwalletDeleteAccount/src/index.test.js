@@ -23,7 +23,7 @@ describe("DeleteAccount", () => {
 
   const listMetricsResult = {
     data: {
-      listMetricss: {
+      listMetrics: {
         items: [
           {
             accountId: "1",
@@ -65,7 +65,7 @@ describe("DeleteAccount", () => {
 
   const listCategoriesResult = {
     data: {
-      listCategorys: {
+      listCategories: {
         items: [
           {
             accountId: "1",
@@ -149,7 +149,7 @@ describe("DeleteAccount", () => {
 
     expect(mockGraphqlOperation).toHaveBeenCalledWith({
       query: queries.deleteMetrics,
-      variables: { input: listMetricsResult.data.listMetricss.items[0] },
+      variables: { input: listMetricsResult.data.listMetrics.items[0] },
     });
   });
 
@@ -190,7 +190,7 @@ describe("DeleteAccount", () => {
     expect(mockGraphqlOperation).toHaveBeenCalledWith({
       query: queries.deleteCategory,
       variables: {
-        input: listCategoriesResult.data.listCategorys.items[0],
+        input: listCategoriesResult.data.listCategories.items[0],
       },
     });
   });
