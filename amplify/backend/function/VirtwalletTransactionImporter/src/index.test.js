@@ -1,11 +1,14 @@
-const mockGraphqlOperation = jest.fn();
-
-jest.mock("virtwallet-lib/virtwallet-graphql-client", () => {
-  return { graphqlOperation: mockGraphqlOperation };
+const mockPutTransactions = jest.fn();
+jest.mock("virtwallet-lib/transaction-loader", () => {
+  return { putTransactions: mockPutTransactions };
 });
 
-const { createTransaction, handler } = require("./index");
-const { incrementMetrics } = require('./metrics');
+const mockIncrementMetrics = jest.fn();
+jest.mock("virtwallet-lib/metrics", () => {
+  return { incrementMetrics: mockIncrementMetrics };
+});
+
+const { handler } = require("./index");
 
 describe("ImportTransactions", () => {
   const event = {
@@ -54,87 +57,64 @@ describe("ImportTransactions", () => {
   let result;
 
   beforeAll(async () => {
-    mockGraphqlOperation.mockReturnValueOnce({
-      data: {
-        createTransaction: {
-          id: "202103190001",
-        },
-      },
-    }).mockRejectedValueOnce(new Error("Test Error"))
-    .mockReturnValueOnce({
-      data: {
-        incrementMetrics: {
-          date: "2021",
+    mockPutTransactions.mockReturnValueOnce({
+      data: [
+        {
+          referenceMonth: "2021-03",
+          value: 4.98,
           categoryId: "1",
-          granularity: "YEARLY",
-          sum: 4.98,
-          count: 1,
         },
-      },
-    })
-    .mockReturnValueOnce({
-      data: {
-        incrementMetrics: {
-          date: "2021-03",
-          categoryId: "1",
-          granularity: "MONTHLY",
-          sum: 4.98,
-          count: 1,
-        },
-      },
+      ],
+      errors: [new Error("Test Error")],
     });
 
     result = await handler(event);
   });
 
   afterAll(() => {
-    mockGraphqlOperation.mockReset();
+    mockPutTransactions.mockReset();
+    mockIncrementMetrics.mockReset();
   });
 
   it("should import transactions", async () => {
-
     expect(result).toEqual({
-      data: ["202103190001"],
-      errors: [{id: "202103190002", message: "Test Error"}],
-    });
-
-    expect(mockGraphqlOperation).toHaveBeenCalledWith({
-      query: createTransaction,
-      variables: { input: event.arguments.input.transactions[0] },
+      errors: [new Error("Test Error")],
     });
   });
 
-  it("should calculate the monthly metrics by month and category", async () => {
-    expect(mockGraphqlOperation).toHaveBeenCalledWith({
-      query: incrementMetrics,
-      variables: {
-        input: {
-          accountId: "1",
-          walletId: "1",
-          date: "2021-03",
-          categoryId: "1",
-          granularity: "MONTHLY",
-          sum: 4.98,
-          count: 1,
-        },
-      },
+  it("should have called putTransactions with correct values", async () => {
+    expect(mockPutTransactions).toHaveBeenCalledWith({
+      accountId: "1",
+      walletId: "1",
+      transactions: event.arguments.input.transactions,
     });
   });
 
-  it("should had calculated the yearly metrics by month and category", async () => {
-    expect(mockGraphqlOperation).toHaveBeenCalledWith({
-      query: incrementMetrics,
-      variables: {
-        input: {
-          accountId: "1",
-          walletId: "1",
-          date: "2021",
+  it("should have called incrementMetrics with correct values", async () => {
+    expect(mockIncrementMetrics).toHaveBeenCalledWith({
+      accountId: "1",
+      walletId: "1",
+      transactions: [
+        {
           categoryId: "1",
-          granularity: "YEARLY",
-          sum: 4.98,
-          count: 1,
+          referenceMonth: "2021-03",
+          value: 4.98,
+        },
+      ],
+    });
+  });
+
+  it("should process empty transaction without errors", async () => {
+    const emptyEvent = {
+      arguments: {
+        input: {
+          transactions: [],
         },
       },
+    };
+    const result = await handler(emptyEvent);
+    expect(result).toEqual({
+      errors: [],
     });
   });
 });

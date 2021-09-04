@@ -125,7 +125,6 @@ export const deleteAll = /* GraphQL */ `
 export const importTransactions = /* GraphQL */ `
   mutation ImportTransactions($input: ImportTransactionsInput!) {
     importTransactions(input: $input) {
-      data
       errors {
         id
         message

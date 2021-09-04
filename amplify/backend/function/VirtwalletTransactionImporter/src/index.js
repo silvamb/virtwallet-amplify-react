@@ -5,90 +5,63 @@
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
-const { graphqlOperation } = require("virtwallet-lib/virtwallet-graphql-client");
-const createTransaction = /* GraphQL */ `
-  mutation CreateTransaction(
-    $input: CreateTransactionInput!
-    $condition: ModelTransactionConditionInput
-  ) {
-    createTransaction(input: $input, condition: $condition) {
-      id
-    }
-  }
-`;
-
-const metrics = require("./metrics");
+const { logger } = require("virtwallet-lib/logger");
+const { putTransactions } = require("virtwallet-lib/transaction-loader");
+const { incrementMetrics } = require("virtwallet-lib/metrics");
 
 exports.handler = async (event) => {
   const { transactions } = event.arguments.input;
 
-  console.log("Importing", transactions.length, "transaction(s)");
-  const data = [];
+  logger.info("Importing transactions", { total: transactions.length });
   const errors = [];
-  for (let transaction of transactions) {
-    try {
-      const result = await putTransaction(transaction);
-      data.push(result.id);
-    } catch (err) {
-      console.log(err);
-      errors.push({ id: transaction.id, message: err.message });
-    }
-  }
 
-  console.log(
-    "Transactions Imported:",
-    data.length,
-    ", Errors:",
-    errors.length
-  );
+  const groupedTransactions = groupTransactions(transactions);
 
-  const groupedTransactions = transactions
-    .filter((transaction) => data.indexOf(transaction.id) >= 0)
-    .reduce((acc, transaction) => {
-      const key = `${transaction.accountId}#${transaction.walletId}`;
+  for (let transactionGroup of groupedTransactions) {
+    const { accountId, walletId } = transactionGroup;
+    const { data: createdTransactions, errors: putTransactionsErrors } =
+      await putTransactions(transactionGroup);
 
-      if (!acc[key]) {
-        acc[key] = [];
-      }
+    logger.info("Transactions Imported", {
+      imported: createdTransactions.length,
+      errors: errors.length,
+    });
 
-      acc[key].push(transaction);
+    errors.push(...putTransactionsErrors);
 
-      return acc;
-    }, {});
-
-  for (let key in groupedTransactions) {
-    const [accountId, walletId] = key.split("#");
-
-    try {
-      await metrics.processRecord({
-        accountId,
-        walletId,
-        transactions: groupedTransactions[key],
-      });
-    } catch (err) {
-      console.log("Error processing metrics for", accountId, walletId, err);
-    }
+    await incrementMetrics({
+      accountId,
+      walletId,
+      transactions: createdTransactions,
+    });
   }
 
   return {
-    data,
     errors,
   };
 };
 
-async function putTransaction(transaction) {
-  const { data, errors } = await graphqlOperation({
-    query: createTransaction,
-    variables: { input: transaction },
+function groupTransactions(transactions) {
+  logger.info("Grouping Transactions");
+  const groupedTransactions = transactions.reduce((map, transaction) => {
+    const key = `${transaction.accountId}#${transaction.walletId}`;
+
+    if (!map.has(key)) {
+      map.set(key, {
+        accountId: transaction.accountId,
+        walletId: transaction.walletId,
+        transactions: [],
+      });
+    }
+
+    map.get(key).transactions.push(transaction);
+
+    return map;
+  }, new Map());
+
+  logger.debug("Transactions grouped", {
+    keys: [...groupedTransactions.keys()],
   });
 
-  if (errors) {
-    console.error("Error creating transaction in GraphQL API", errors);
-
-    throw new Error("Error creating transaction " + transaction.id);
-  }
-
-  return data.createTransaction;
+  return groupedTransactions.values();
 }
-
-exports.createTransaction = createTransaction;

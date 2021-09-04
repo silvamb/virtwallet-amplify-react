@@ -169,6 +169,34 @@ describe("CreateTransaction", () => {
     });
   });
 
+  it("should return error when creating transaction", async () => {
+    const createTransactionReponse = {
+      data: null,
+      errors: [
+        {
+          path: null,
+          locations: [
+            {
+              line: 2,
+              column: 21,
+              sourceName: null,
+            },
+          ],
+          message: "Error",
+        },
+      ],
+    };
+
+    mockGraphqlOperation.mockReturnValueOnce(createTransactionReponse);
+
+    const results = await putTransactions(baseEvent);
+    expect(results).toEqual({
+      data: [],
+      errors: [new Error("Error")],
+    });
+
+  });
+
   afterEach(() => {
     mockGraphqlOperation.mockReset();
   });

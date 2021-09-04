@@ -6,8 +6,9 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "jest": "^27.0.6",
-    "virtwallet-lib": "link:../../virtwalletampreactLibLayer/src",
-    "numeral": "2.0.6"
+    "virtwallet-lib": "link:../../virtwalletampreactLibLayer/virtwallet-lib/src",
+    "numeral": "2.0.6",
+    "winston": "3.3.3"
   },
   "scripts": {
     "test": "jest"

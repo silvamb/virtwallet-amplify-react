@@ -56,8 +56,15 @@ async function putTransaction({ transaction, accountId, walletId, fileName }) {
   if (errors) {
     console.error("Error creating transaction in GraphQL API", errors);
 
-    return undefined;
+    throw new CreateTransactionError(transaction, errors[0].message);
   }
 
   return data.createTransaction;
+}
+
+class CreateTransactionError extends Error {
+  constructor(transaction, message) {
+    super(message);
+    this.transaction = transaction;
+  }
 }

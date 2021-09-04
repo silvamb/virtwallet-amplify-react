@@ -19,7 +19,7 @@
         },
         "virtwalletampreactLibLayer": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
-          "s3Key": "amplify-builds/virtwalletampreactLibLayer-LambdaLayerVersiona06002f0-build.zip"
+          "s3Key": "amplify-builds/virtwalletampreactLibLayer-LambdaLayerVersion08b1a106-build.zip"
         },
         "VirtwalletRequestFileUpload": {
           "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
@@ -29,11 +29,11 @@
         "VirtwalletUlsterCsvStatementParser": {
           "accountFilesBucket": "cdkbackendstack-virtwalletaccountfilesbucket48829-17fo2ajf6q2ot",
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
-          "s3Key": "amplify-builds/VirtwalletUlsterCsvStatementParser-586c7076433141464d49-build.zip"
+          "s3Key": "amplify-builds/VirtwalletUlsterCsvStatementParser-61484b7a56527665764e-build.zip"
         },
         "VirtwalletTransactionImporter": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
-          "s3Key": "amplify-builds/VirtwalletTransactionImporter-3656373772393333476c-build.zip"
+          "s3Key": "amplify-builds/VirtwalletTransactionImporter-6e39776677695a4e7531-build.zip"
         },
         "VirtwalletDeleteAccount": {
           "deploymentBucketName": "amplify-virtwalletampreact-dev-223525-deployment",
