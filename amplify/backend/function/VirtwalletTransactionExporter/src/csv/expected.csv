@@ -1,0 +1,2 @@
+accountId,walletId,id,dt,date,referenceMonth,description,keyword,value,category,source,sourceType,type,balance,balanceType,categoryId
+1,1,202110040001,2020-10-04T00:00:00.00Z,2020-10-04,2020-10,Description, Line 2,Description,1.23,Category 1,1,1,POS,5.01,DEBIT,1

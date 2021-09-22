@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "api": {
+      "virtwalletbackend": [
+        "Query"
+      ]
+    }
+  },
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "virtwalletampreactThirdPartyLibsLayer",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    },
+    {
+      "type": "ProjectLayer",
+      "resourceName": "virtwalletampreactLibLayer",
+      "env": "dev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "accountFilesBucket",
+      "environmentVariableName": "ACCOUNT_FILES_BUCKET"
+    }
+  ]
+}
